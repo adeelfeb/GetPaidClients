@@ -7,19 +7,19 @@ export default function ContactPage() {
   return (
     <>
       <Head>
-        <title>Contact | NBA Games</title>
+        <title>Contact | GetPaid Workshop</title>
         <meta 
           name="description" 
-          content="Get in touch with NBA Games. Questions, feedback, or suggestions about our NBA schedule and scores site." 
+          content="Get in touch with GetPaid Workshop. Questions, feedback, or sign up for our AI reselling workshop." 
         />
         <meta 
           name="keywords" 
-          content="NBA, contact, feedback, support" 
+          content="contact, feedback, workshop, GetPaid" 
         />
-        <meta property="og:title" content="Contact | NBA Games" />
+        <meta property="og:title" content="Contact | GetPaid Workshop" />
         <meta 
           property="og:description" 
-          content="Get in touch with NBA Games." 
+          content="Get in touch with GetPaid Workshop." 
         />
         <meta property="og:type" content="website" />
       </Head>
@@ -32,7 +32,7 @@ export default function ContactPage() {
                 Contact Us
               </h1>
               <p className="text-base sm:text-xl text-slate-600 max-w-2xl mx-auto px-1">
-                Have questions or feedback about NBA Games? Get in touch.
+                Have questions or want to join the workshop? Get in touch.
               </p>
             </div>
 

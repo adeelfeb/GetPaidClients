@@ -20,6 +20,14 @@ module.exports = {
           800: '#1e40af',
           900: '#1e3a8a',
         },
+        // Brand: yellow (amber) + red — professional, non-basketball
+        brand: {
+          yellow: '#eab308',
+          'yellow-light': '#fbbf24',
+          'yellow-muted': '#fef3c7',
+          red: '#b91c1c',
+          'red-light': '#dc2626',
+        },
       },
       fontFamily: {
         sans: ['var(--font-poppins)', 'Poppins', 'system-ui', 'sans-serif'],

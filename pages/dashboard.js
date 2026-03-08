@@ -504,7 +504,7 @@ export default function Dashboard({ user }) {
 
   // Ensure sectionTitle is always a string to prevent React warnings
   const safeSectionTitle = typeof sectionTitle === 'string' ? sectionTitle : (Array.isArray(sectionTitle) ? sectionTitle.join(' ') : String(sectionTitle || 'Dashboard'));
-  const pageTitle = `${safeSectionTitle} | NBA Dashboard`;
+  const pageTitle = `${safeSectionTitle} | Dashboard`;
 
   return (
     <>

@@ -57,13 +57,16 @@ const nextConfig = {
     optimizePackageImports: ['ag-grid-community', 'ag-grid-react'],
   },
 
-  // Next.js 16 uses Turbopack by default, but we have webpack config
-  // Explicitly use webpack to avoid conflicts
+  // Next.js 16 uses Turbopack by default for `next dev` (faster).
+  // Use `next dev --webpack` only if you need webpack in dev.
   turbopack: {},
 
-  // Optimize images
+  // Optimize images (allow Unsplash for hero/backgrounds)
   images: {
     formats: ['image/avif', 'image/webp'],
+    remotePatterns: [
+      { protocol: 'https', hostname: 'images.unsplash.com', pathname: '/**' },
+    ],
   },
 
   webpack: (config, { isServer, dev }) => {
@@ -86,8 +89,12 @@ const nextConfig = {
     // Improved cache handling to prevent intermittent build issues
     // Next.js 15 has better built-in cache handling, but we ensure consistency
     if (dev) {
-      // In dev mode, use webpack's default caching (Next.js handles it)
-      // Don't override to prevent conflicts
+      // Reduce "keeps compiling": ignore noisy dirs and debounce rapid file changes
+      config.watchOptions = {
+        ignored: ['**/node_modules/**', '**/.next/**', '**/.git/**'],
+        aggregateTimeout: 400,
+        poll: false,
+      };
     } else {
       // Production: Use filesystem cache for both server and client
       // This improves build reliability and prevents _document not found issues

@@ -4,41 +4,31 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
 
-// Support both App Router and Pages Router
 function useRouterCompat() {
   const [pathname, setPathname] = useState('')
-  
+
   useEffect(() => {
     if (typeof window !== 'undefined') {
       setPathname(window.location.pathname)
-      
-      const handleRouteChange = () => {
-        setPathname(window.location.pathname)
-      }
-      
+      const handleRouteChange = () => setPathname(window.location.pathname)
       window.addEventListener('popstate', handleRouteChange)
-      
-      const originalPushState = history.pushState
-      const originalReplaceState = history.replaceState
-      
-      history.pushState = function(...args) {
-        originalPushState.apply(history, args)
+      const op = history.pushState
+      const or = history.replaceState
+      history.pushState = function (...args) {
+        op.apply(history, args)
         handleRouteChange()
       }
-      
-      history.replaceState = function(...args) {
-        originalReplaceState.apply(history, args)
+      history.replaceState = function (...args) {
+        or.apply(history, args)
         handleRouteChange()
       }
-      
       return () => {
         window.removeEventListener('popstate', handleRouteChange)
-        history.pushState = originalPushState
-        history.replaceState = originalReplaceState
+        history.pushState = op
+        history.replaceState = or
       }
     }
   }, [])
-  
   return { asPath: pathname, pathname }
 }
 
@@ -50,155 +40,186 @@ export default function Navbar() {
 
   useEffect(() => {
     setIsMounted(true)
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50)
-    }
-
-    window.addEventListener('scroll', handleScroll)
+    const handleScroll = () => setIsScrolled(window.scrollY > 24)
+    window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen)
-  }
+  useEffect(() => {
+    if (isMenuOpen) document.body.style.overflow = 'hidden'
+    else document.body.style.overflow = ''
+    return () => { document.body.style.overflow = '' }
+  }, [isMenuOpen])
 
   const isActive = (href) => {
     if (!isMounted) return false
     const pathname = router.asPath || router.pathname
     if (!pathname) return false
-    if (href === '/') {
-      return pathname === '/'
-    }
+    if (href === '/') return pathname === '/'
     return pathname.startsWith(href)
   }
 
   const navItems = [
     { href: '/', label: 'Home' },
-    { href: '/blogs', label: 'Blog' },
-    { href: '/information', label: 'Information' },
     { href: '/privacy-policy', label: 'Privacy Policy' },
+    { href: '/contact', label: 'Contact' },
   ]
 
   return (
     <motion.nav
       initial={{ y: -100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.5, ease: 'easeOut' }}
-      className="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
+      transition={{ duration: 0.35, ease: 'easeOut' }}
+      className="fixed top-0 left-0 right-0 z-50"
+      role="navigation"
+      aria-label="Main navigation"
     >
-      <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-6 py-2 sm:py-2.5">
-        <div className={`flex items-center justify-between gap-4 rounded-xl px-3 sm:px-4 lg:px-5 py-2 sm:py-2.5 min-h-[48px] sm:min-h-[52px] transition-all duration-300 ${
-          isScrolled
-            ? 'bg-slate-900/95 backdrop-blur-md shadow-lg border border-slate-700/50'
-            : 'bg-slate-900/90 backdrop-blur-sm shadow-md border border-slate-800/50'
-        }`}>
-          {/* Logo */}
+      <div className="mx-auto max-w-7xl px-4 sm:px-5 lg:px-6">
+        <header
+          className={`
+            flex items-center justify-between gap-3 sm:gap-4
+            min-h-[56px] sm:min-h-[60px] lg:min-h-[64px]
+            rounded-2xl sm:rounded-2xl
+            px-4 sm:px-5 lg:px-6
+            transition-all duration-300 ease-out
+            ${isScrolled
+              ? 'bg-white/98 backdrop-blur-md shadow-lg shadow-slate-200/80 border border-slate-200/90'
+              : 'bg-white/95 backdrop-blur-sm shadow-md shadow-slate-200/50 border border-slate-200/70'
+            }
+          `}
+        >
+          {/* Logo — tap target 44px+ */}
           <div className="flex-shrink-0 min-w-0">
             <Link
               href="/"
-              className="text-lg sm:text-xl font-bold no-underline hover:opacity-90 active:opacity-80 transition-opacity inline-block tracking-tight"
+              className="inline-flex items-center min-h-[44px] min-w-[44px] -m-2 p-2 rounded-xl text-base sm:text-lg font-bold no-underline hover:opacity-90 active:opacity-80 transition-opacity tracking-tight"
             >
-              <span className="text-orange-500">NBA</span>
-              <span className="text-slate-300"> Games</span>
+              <span className="text-amber-600">GetPaid</span>
+              <span className="text-slate-700"> Workshop</span>
             </Link>
           </div>
 
-          {/* Desktop nav links */}
-          <div className="hidden md:flex flex-1 justify-center min-w-0">
-            <div className="flex items-center gap-1 sm:gap-2 lg:gap-4">
-              {navItems.map((item) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className={`px-2.5 py-1.5 sm:px-3 sm:py-2 text-xs sm:text-sm font-medium rounded-md transition-all duration-200 no-underline relative ${
-                    isActive(item.href)
-                      ? 'text-orange-400 bg-orange-500/10'
-                      : 'text-slate-300 hover:text-white hover:bg-slate-700/50'
-                  }`}
-                >
-                  {item.label}
-                </Link>
-              ))}
-            </div>
+          {/* Desktop: nav links + CTAs */}
+          <div className="hidden lg:flex flex-1 items-center justify-center gap-1 min-w-0">
+            {navItems.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={`
+                  min-h-[44px] inline-flex items-center px-4 py-2 rounded-xl text-sm font-medium no-underline transition-colors duration-200
+                  ${isActive(item.href)
+                    ? 'text-amber-600 bg-amber-50'
+                    : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+                  }
+                `}
+              >
+                {item.label}
+              </Link>
+            ))}
           </div>
 
-          {/* Right: CTA buttons (desktop) + menu toggle (mobile) */}
-          <div className="flex items-center gap-1.5 sm:gap-2 flex-shrink-0">
-            <div className="hidden md:flex items-center gap-1.5 sm:gap-2">
-              <Link
-                href="/login"
-                className="inline-flex items-center justify-center h-8 sm:h-9 px-3 sm:px-4 text-xs sm:text-sm font-semibold text-white bg-orange-600 hover:bg-orange-500 active:bg-orange-700 rounded-lg no-underline transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 focus:ring-offset-slate-900"
-              >
-                Login
-              </Link>
-              <Link
-                href="/signup"
-                className="inline-flex items-center justify-center h-8 sm:h-9 px-3 sm:px-4 text-xs sm:text-sm font-semibold text-slate-200 bg-slate-700/80 hover:bg-slate-600 active:bg-slate-600 border border-slate-600 hover:border-slate-500 rounded-lg no-underline transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-offset-2 focus:ring-offset-slate-900"
-              >
-                Sign Up
-              </Link>
-            </div>
-
-            <button
-              type="button"
-              onClick={toggleMenu}
-              className="md:hidden flex items-center justify-center w-9 h-9 rounded-lg text-slate-300 hover:text-white hover:bg-slate-700/50 focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-offset-2 focus:ring-offset-slate-900 transition-colors"
-              aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
-              aria-expanded={isMenuOpen}
+          <div className="hidden lg:flex items-center gap-2 flex-shrink-0">
+            <Link
+              href="/workshop"
+              className="inline-flex items-center justify-center min-h-[44px] px-5 py-2.5 text-sm font-semibold text-white bg-red-600 hover:bg-red-700 active:bg-red-800 rounded-xl shadow-md shadow-red-600/25 hover:shadow-red-600/30 transition-all duration-200 no-underline focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 focus:ring-offset-white"
             >
-              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                {isMenuOpen ? (
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-                ) : (
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
-                )}
-              </svg>
-            </button>
+              Join Workshop
+            </Link>
+            <Link
+              href="/login"
+              className="inline-flex items-center justify-center min-h-[44px] px-4 py-2.5 text-sm font-semibold text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-xl no-underline transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-slate-300 focus:ring-offset-2 focus:ring-offset-white"
+            >
+              Login
+            </Link>
+            <Link
+              href="/signup"
+              className="inline-flex items-center justify-center min-h-[44px] px-4 py-2.5 text-sm font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 border border-slate-200 rounded-xl no-underline transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-slate-300 focus:ring-offset-2 focus:ring-offset-white"
+            >
+              Sign Up
+            </Link>
           </div>
-        </div>
 
-        {/* Mobile menu */}
+          {/* Mobile: menu button — 44px touch target */}
+          <button
+            type="button"
+            onClick={() => setIsMenuOpen((o) => !o)}
+            className="lg:hidden flex items-center justify-center w-12 h-12 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100 active:bg-slate-200 transition-colors focus:outline-none focus:ring-2 focus:ring-slate-300 focus:ring-offset-2 focus:ring-offset-white"
+            aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
+            aria-expanded={isMenuOpen}
+            aria-controls="mobile-menu"
+          >
+            <svg className="w-6 h-6 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden>
+              {isMenuOpen ? (
+                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+              ) : (
+                <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+              )}
+            </svg>
+          </button>
+        </header>
+
+        {/* Mobile menu — full viewport, responsive */}
         <AnimatePresence>
           {isMenuOpen && (
             <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
-              exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.25, ease: 'easeOut' }}
-              className="md:hidden mt-2 overflow-hidden"
+              id="mobile-menu"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              className="lg:hidden fixed inset-0 top-[56px] sm:top-[60px] z-40 bg-slate-900/20 backdrop-blur-sm"
+              aria-hidden="false"
+              onClick={() => setIsMenuOpen(false)}
             >
-              <div className="rounded-xl bg-slate-900/95 backdrop-blur-md border border-slate-700/50 shadow-xl py-2 px-2">
-                {navItems.map((item) => (
-                  <Link
-                    key={item.href}
-                    href={item.href}
-                    className={`block px-3 py-2.5 text-sm font-medium rounded-lg no-underline transition-colors ${
-                      isActive(item.href)
-                        ? 'text-orange-400 bg-orange-500/10'
-                        : 'text-slate-300 hover:text-white hover:bg-slate-700/50'
-                    }`}
-                    onClick={() => setIsMenuOpen(false)}
-                  >
-                    {item.label}
-                  </Link>
-                ))}
-                <div className="flex gap-2 pt-2 mt-2 border-t border-slate-700/50 px-2">
-                  <Link
-                    href="/login"
-                    className="flex-1 text-center py-2.5 text-sm font-semibold text-white bg-orange-600 hover:bg-orange-500 rounded-lg no-underline transition-colors"
-                    onClick={() => setIsMenuOpen(false)}
-                  >
-                    Login
-                  </Link>
-                  <Link
-                    href="/signup"
-                    className="flex-1 text-center py-2.5 text-sm font-semibold text-slate-200 bg-slate-700 hover:bg-slate-600 rounded-lg no-underline transition-colors border border-slate-600"
-                    onClick={() => setIsMenuOpen(false)}
-                  >
-                    Sign Up
-                  </Link>
+              <motion.div
+                initial={{ opacity: 0, y: -8 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -8 }}
+                transition={{ duration: 0.2 }}
+                className="mx-4 mt-2 rounded-2xl bg-white border border-slate-200 shadow-xl overflow-hidden"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <div className="py-2">
+                  {navItems.map((item) => (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      className={`
+                        flex items-center min-h-[48px] px-4 py-3 text-base font-medium no-underline transition-colors
+                        ${isActive(item.href) ? 'text-amber-600 bg-amber-50' : 'text-slate-700 hover:bg-slate-50 active:bg-slate-100'}
+                      `}
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      {item.label}
+                    </Link>
+                  ))}
                 </div>
-              </div>
+                <div className="border-t border-slate-200 p-3 space-y-2">
+                  <Link
+                    href="/workshop"
+                    className="flex items-center justify-center min-h-[48px] w-full py-3 text-base font-semibold text-white bg-red-600 hover:bg-red-700 rounded-xl no-underline transition-colors"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    Join Workshop
+                  </Link>
+                  <div className="grid grid-cols-2 gap-2">
+                    <Link
+                      href="/login"
+                      className="flex items-center justify-center min-h-[48px] py-3 text-base font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 rounded-xl no-underline transition-colors"
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      Login
+                    </Link>
+                    <Link
+                      href="/signup"
+                      className="flex items-center justify-center min-h-[48px] py-3 text-base font-semibold text-slate-700 border border-slate-200 hover:bg-slate-50 rounded-xl no-underline transition-colors"
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      Sign Up
+                    </Link>
+                  </div>
+                </div>
+              </motion.div>
             </motion.div>
           )}
         </AnimatePresence>

@@ -6,46 +6,42 @@ export default function InformationPage() {
   return (
     <>
       <Head>
-        <title>Information | NBA Games</title>
+        <title>Information | GetPaid Workshop</title>
         <meta
           name="description"
-          content="Information about the NBA Games website. Stay updated with NBA schedule, scores, and standings."
+          content="Information about GetPaid Workshop. Learn about our AI software reselling and marketing agency workshop."
         />
-        <meta name="keywords" content="NBA, basketball, schedule, scores, games, information" />
+        <meta name="keywords" content="workshop, AI reselling, marketing agency, information" />
       </Head>
       <div className="min-h-screen bg-slate-50">
         <Navbar />
         <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-24 md:py-32">
           <h1 className="text-3xl md:4xl font-bold text-slate-900 mb-2">Information</h1>
-          <p className="text-slate-500 text-sm mb-10">About NBA Games</p>
+          <p className="text-slate-500 text-sm mb-10">About GetPaid Workshop</p>
 
           <div className="prose prose-slate max-w-none space-y-8 text-slate-700">
             <section>
               <h2 className="text-xl font-semibold text-slate-900 mb-3">About This Site</h2>
               <p>
-                NBA Games is a mobile-friendly website that displays upcoming and recent NBA games. 
-                We use ESPN data to show game schedules, scores, team records, venues, and broadcast information.
-                The site is designed to work well on both desktop and mobile devices.
+                GetPaid Workshop helps you start an AI software reselling business from scratch. We offer workshops, webinars, and resources on how to charge $1000 per client and keep 100% of the profits. The site includes a blog and contact options for support.
               </p>
             </section>
 
             <section>
-              <h2 className="text-xl font-semibold text-slate-900 mb-3">Data Source</h2>
+              <h2 className="text-xl font-semibold text-slate-900 mb-3">Workshop &amp; Resources</h2>
               <p>
-                Game data is provided via ESPN&apos;s public API. Schedule, scores, team records, and broadcast 
-                channels are updated regularly. We do not guarantee real-time accuracy and recommend 
-                checking official sources for critical information.
+                Sign up for our free workshop to learn proven strategies for launching your marketing agency. We cover AI voice calling, CRM and email marketing, and WhatsApp marketing solutions. All content is designed to work on desktop and mobile.
               </p>
             </section>
 
             <section>
               <h2 className="text-xl font-semibold text-slate-900 mb-3">Features</h2>
               <ul className="list-disc pl-6 space-y-2">
-                <li>Upcoming and recent NBA game schedules</li>
-                <li>Team names and current records</li>
-                <li>Date, time, venue, and broadcast channel for each game</li>
+                <li>Free workshop signup and webinar access</li>
+                <li>AI voice calling, CRM, and WhatsApp marketing solutions</li>
+                <li>Resources and strategies for agency growth</li>
                 <li>Mobile-responsive design</li>
-                <li>Blog section for NBA-related content</li>
+                <li>Blog section and contact support</li>
               </ul>
             </section>
 
@@ -53,7 +49,7 @@ export default function InformationPage() {
               <h2 className="text-xl font-semibold text-slate-900 mb-3">Contact</h2>
               <p>
                 For questions or feedback, please use our{' '}
-                <a href="/contact" className="text-orange-600 hover:text-orange-500 underline">
+                <a href="/contact" className="text-amber-600 hover:text-amber-700 underline">
                   Contact
                 </a>{' '}
                 page.

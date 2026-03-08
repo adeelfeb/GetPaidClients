@@ -7,46 +7,41 @@ export default function Footer() {
   const currentYear = new Date().getFullYear()
 
   return (
-    <footer className="bg-slate-900 text-white border-t border-slate-800">
+    <footer className="bg-slate-100 text-slate-800 border-t border-slate-200">
       <section className="py-12 md:py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {/* Site Info */}
             <div>
-              <h3 className="text-lg font-bold mb-4 text-orange-500">
-                NBA Games
+              <h3 className="text-lg font-bold mb-4 text-amber-600">
+                GetPaid Workshop
               </h3>
-              <p className="text-gray-400 text-sm">
-                Stay up to date with the latest NBA schedule, game results, and standings. Mobile-friendly and always updated.
+              <p className="text-slate-600 text-sm">
+                Learn how to start an AI software reselling business from scratch. Charge $1000 per client and keep 100% of the profits.
               </p>
             </div>
 
             {/* Quick Links */}
             <div>
-              <h4 className="font-semibold mb-4 text-slate-200">Quick Links</h4>
-              <ul className="space-y-2 text-gray-400 text-sm">
+              <h4 className="font-semibold mb-4 text-slate-800">Quick Links</h4>
+              <ul className="space-y-2 text-slate-600 text-sm">
                 <li>
-                  <Link href="/" className="hover:text-white transition-colors">
+                  <Link href="/" className="hover:text-slate-900 transition-colors">
                     Home
                   </Link>
                 </li>
                 <li>
-                  <Link href="/blogs" className="hover:text-white transition-colors">
-                    Blog
+                  <Link href="/workshop" className="hover:text-slate-900 transition-colors">
+                    Workshop
                   </Link>
                 </li>
                 <li>
-                  <Link href="/information" className="hover:text-white transition-colors">
-                    Information
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/privacy-policy" className="hover:text-white transition-colors">
+                  <Link href="/privacy-policy" className="hover:text-slate-900 transition-colors">
                     Privacy Policy
                   </Link>
                 </li>
                 <li>
-                  <Link href="/contact" className="hover:text-white transition-colors">
+                  <Link href="/contact" className="hover:text-slate-900 transition-colors">
                     Contact
                   </Link>
                 </li>
@@ -55,20 +50,20 @@ export default function Footer() {
 
             {/* Account */}
             <div>
-              <h4 className="font-semibold mb-4 text-slate-200">Account</h4>
-              <ul className="space-y-2 text-gray-400 text-sm">
+              <h4 className="font-semibold mb-4 text-slate-800">Account</h4>
+              <ul className="space-y-2 text-slate-600 text-sm">
                 <li>
-                  <Link href="/login" className="hover:text-white transition-colors">
+                  <Link href="/login" className="hover:text-slate-900 transition-colors">
                     Login
                   </Link>
                 </li>
                 <li>
-                  <Link href="/signup" className="hover:text-white transition-colors">
+                  <Link href="/signup" className="hover:text-slate-900 transition-colors">
                     Sign Up
                   </Link>
                 </li>
                 <li>
-                  <Link href="/dashboard" className="hover:text-white transition-colors">
+                  <Link href="/dashboard" className="hover:text-slate-900 transition-colors">
                     Dashboard
                   </Link>
                 </li>
@@ -78,10 +73,10 @@ export default function Footer() {
         </div>
       </section>
 
-      <section className="py-4 border-t border-slate-800">
+      <section className="py-4 border-t border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center text-gray-500 text-sm">
-            <p>© {currentYear} NBA Games. All rights reserved.</p>
+          <div className="text-center text-slate-500 text-sm">
+            <p>© {currentYear} GetPaid Workshop. All rights reserved.</p>
           </div>
         </div>
       </section>

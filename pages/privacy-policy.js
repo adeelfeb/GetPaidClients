@@ -7,26 +7,26 @@ export default function PrivacyPolicyPage() {
   return (
     <>
       <Head>
-        <title>Privacy Policy | NBA Games</title>
+        <title>Privacy Policy | GetPaid Workshop</title>
         <meta
           name="description"
-          content="Privacy policy for NBA Games. How we handle your data when you use our website."
+          content="Privacy policy for GetPaid Workshop. How we handle your data when you use our website and workshop."
         />
-        <meta name="keywords" content="privacy policy, NBA Games, data protection, website usage" />
-        <meta property="og:title" content="Privacy Policy | NBA Games" />
+        <meta name="keywords" content="privacy policy, GetPaid Workshop, data protection, website usage" />
+        <meta property="og:title" content="Privacy Policy | GetPaid Workshop" />
         <meta property="og:type" content="website" />
       </Head>
       <div className="min-h-screen bg-slate-50">
         <Navbar />
         <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24 pt-24">
           <h1 className="text-3xl md:text-4xl font-bold text-slate-900 mb-2">Privacy Policy</h1>
-          <p className="text-slate-500 text-sm mb-10">Last updated: February 2025</p>
+          <p className="text-slate-500 text-sm mb-10">Last updated: March 2025</p>
 
           <div className="prose prose-slate max-w-none space-y-10 text-slate-700">
             <section>
               <h2 className="text-xl font-semibold text-slate-900 mb-3">1. Introduction</h2>
               <p>
-                This Privacy Policy describes how NBA Games (&quot;we&quot;, &quot;our&quot;, or &quot;us&quot;) handles information in connection with your use of this website. By using our site, you agree to the practices described here. This policy applies to all services offered on this website, including: browsing the home page, viewing NBA games schedule and scores; reading or publishing blogs; using the contact form; and using the dashboard when you have an account.
+                This Privacy Policy describes how GetPaid Workshop (&quot;we&quot;, &quot;our&quot;, or &quot;us&quot;) handles information in connection with your use of this website. By using our site, you agree to the practices described here. This policy applies to all services offered on this website, including: browsing the home page; reading the workshop page and signing up; using the contact form; and using the dashboard when you have an account.
               </p>
             </section>
 
@@ -36,8 +36,8 @@ export default function PrivacyPolicyPage() {
                 Our website provides the following services and features:
               </p>
               <ul className="list-disc pl-6 space-y-1">
-                <li><strong>General browsing:</strong> Home, Information, Blog, and Contact pages can be visited without creating an account. We do not track or store your personal information for these pages beyond what is technically necessary (e.g., server logs).</li>
-                <li><strong>NBA Games:</strong> Game data is fetched from ESPN and displayed publicly. We do not collect personal data for viewing games.</li>
+                <li><strong>General browsing:</strong> Home, Workshop, Information, Blog, and Contact pages can be visited without creating an account. We do not track or store your personal information for these pages beyond what is technically necessary (e.g., server logs).</li>
+                <li><strong>Workshop signup:</strong> When you sign up for the workshop with your email, we use that email to contact you about the workshop. We do not sell or share it for marketing.</li>
                 <li><strong>Blogs:</strong> Content you publish (when logged in) is stored to display on the site. We do not sell your blog content or use it for advertising.</li>
                 <li><strong>Account & dashboard:</strong> To use blog publishing or the dashboard, you may sign up and log in. We store only what is needed (e.g., email, account-related data).</li>
               </ul>
@@ -74,13 +74,13 @@ export default function PrivacyPolicyPage() {
             <section>
               <h2 className="text-xl font-semibold text-slate-900 mb-3">7. Contact</h2>
               <p>
-                For questions about this Privacy Policy or your data, use our <Link href="/contact" className="text-orange-600 hover:underline">Contact</Link> page.
+                For questions about this Privacy Policy or your data, use our <Link href="/contact" className="text-amber-600 hover:underline">Contact</Link> page.
               </p>
             </section>
           </div>
 
           <div className="mt-12 pt-8 border-t border-slate-200">
-            <Link href="/" className="text-orange-600 hover:underline font-medium">
+            <Link href="/" className="text-amber-600 hover:underline font-medium">
               ← Back to Home
             </Link>
           </div>

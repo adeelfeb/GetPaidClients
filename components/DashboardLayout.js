@@ -179,7 +179,7 @@ export default function DashboardLayout({
             </div>
             <div className="brand-text">
               <span className="brand-title">
-                <span className="brand-title-blue">NBA</span>
+                <span className="brand-title-blue">GetPaid</span>
                 <span className="brand-title-separator"> </span>
                 <span className="brand-title-purple">Dashboard</span>
               </span>

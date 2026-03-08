@@ -27,7 +27,7 @@ export default function Services() {
       icon: ShoppingCart,
       title: 'E-Commerce Platforms',
       description: 'Launching a store? We build secure, scalable e-commerce platforms with Stripe/PayPal integrations, inventory management, and intuitive user dashboards.',
-      gradient: 'from-orange-600 to-red-600',
+      gradient: 'from-amber-500 to-red-600',
     },
     {
       icon: Database,
