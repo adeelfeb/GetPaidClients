@@ -27,7 +27,7 @@ const reviews = [
     country: 'Pakistan',
     rating: 5,
     timeAgo: '2 months ago',
-    review: `The portfolio website exceeded my expectations. Modern, fast, and fully optimized for SEO. Delivered efficiently within budget. Extremely satisfied!`,
+    review: `The GetPaidClients website exceeded my expectations. Modern, fast, and fully optimized for SEO. Delivered efficiently within budget. Extremely satisfied!`,
   },
   {
     id: 4,
@@ -59,7 +59,7 @@ const reviews = [
     country: 'Pakistan',
     rating: 5,
     timeAgo: '3 months ago',
-    review: `Developed and deployed a full-stack Next.js portfolio website perfectly. Modern, responsive, SEO optimized. Deployment on DigitalOcean works flawlessly. Highly professional!`,
+    review: `Developed and deployed a full-stack Next.js GetPaidClients website perfectly. Modern, responsive, SEO optimized. Deployment on DigitalOcean works flawlessly. Highly professional!`,
   },
   {
     id: 8,

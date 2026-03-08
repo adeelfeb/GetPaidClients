@@ -1,8 +1,9 @@
 #!/bin/bash
 set -e
 
-# Project directory (under root's home on the server)
-PROJECT_DIR="/root/GetPaidClients"
+# Project directory = parent of the directory containing this script (works no matter where repo is cloned)
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+PROJECT_DIR="$(dirname "$SCRIPT_DIR")"
 cd "$PROJECT_DIR"
 
 echo "🔄 Pulling latest code..."
