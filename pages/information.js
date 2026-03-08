@@ -1,5 +1,4 @@
 import Head from 'next/head';
-import Navbar from '../components/designndev/Navbar';
 import Footer from '../components/designndev/Footer';
 
 export default function InformationPage() {
@@ -14,8 +13,7 @@ export default function InformationPage() {
         <meta name="keywords" content="workshop, AI reselling, marketing agency, information" />
       </Head>
       <div className="min-h-screen bg-slate-50">
-        <Navbar />
-        <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-24 md:py-32">
+        <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 pb-16 sm:pt-12 sm:pb-20 md:py-16">
           <h1 className="text-3xl md:4xl font-bold text-slate-900 mb-2">Information</h1>
           <p className="text-slate-500 text-sm mb-10">About GetPaid Workshop</p>
 

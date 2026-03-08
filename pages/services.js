@@ -1,5 +1,4 @@
 import Head from 'next/head';
-import Navbar from '../components/designndev/Navbar';
 import Footer from '../components/designndev/Footer';
 import Services from '../components/designndev/Services';
 
@@ -25,7 +24,6 @@ export default function ServicesPage() {
         <link rel="canonical" href="https://designndev.com/services" />
       </Head>
       <div className="min-h-screen bg-white">
-        <Navbar />
         <main>
           <Services />
         </main>

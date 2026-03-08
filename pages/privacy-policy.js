@@ -1,5 +1,4 @@
 import Head from 'next/head';
-import Navbar from '../components/designndev/Navbar';
 import Footer from '../components/designndev/Footer';
 import Link from 'next/link';
 
@@ -17,8 +16,7 @@ export default function PrivacyPolicyPage() {
         <meta property="og:type" content="website" />
       </Head>
       <div className="min-h-screen bg-slate-50">
-        <Navbar />
-        <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24 pt-24">
+        <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 pb-16 sm:pt-12 sm:pb-20 md:py-16">
           <h1 className="text-3xl md:text-4xl font-bold text-slate-900 mb-2">Privacy Policy</h1>
           <p className="text-slate-500 text-sm mb-10">Last updated: March 2025</p>
 
@@ -26,61 +24,60 @@ export default function PrivacyPolicyPage() {
             <section>
               <h2 className="text-xl font-semibold text-slate-900 mb-3">1. Introduction</h2>
               <p>
-                This Privacy Policy describes how GetPaid Workshop (&quot;we&quot;, &quot;our&quot;, or &quot;us&quot;) handles information in connection with your use of this website. By using our site, you agree to the practices described here. This policy applies to all services offered on this website, including: browsing the home page; reading the workshop page and signing up; using the contact form; and using the dashboard when you have an account.
+                This Privacy Policy describes how GetPaid Workshop (&quot;we&quot;, &quot;our&quot;, or &quot;us&quot;) collects, uses, and protects your information when you use our website. By using our site—including the home page, workshop signup, and contact form—you agree to the practices described here. Our focus is on helping you start and scale an AI software business; we keep your data minimal and secure.
               </p>
             </section>
 
             <section>
-              <h2 className="text-xl font-semibold text-slate-900 mb-3">2. Utilization of This Website</h2>
+              <h2 className="text-xl font-semibold text-slate-900 mb-3">2. How We Use This Website</h2>
               <p className="mb-3">
-                Our website provides the following services and features:
+                GetPaid Workshop offers:
               </p>
               <ul className="list-disc pl-6 space-y-1">
-                <li><strong>General browsing:</strong> Home, Workshop, Information, Blog, and Contact pages can be visited without creating an account. We do not track or store your personal information for these pages beyond what is technically necessary (e.g., server logs).</li>
-                <li><strong>Workshop signup:</strong> When you sign up for the workshop with your email, we use that email to contact you about the workshop. We do not sell or share it for marketing.</li>
-                <li><strong>Blogs:</strong> Content you publish (when logged in) is stored to display on the site. We do not sell your blog content or use it for advertising.</li>
-                <li><strong>Account & dashboard:</strong> To use blog publishing or the dashboard, you may sign up and log in. We store only what is needed (e.g., email, account-related data).</li>
+                <li><strong>Home & workshop:</strong> You can browse the site and sign up for our workshop with your email. We use your email only to send workshop updates, webinar invites, and relevant content. We do not sell or share it for marketing.</li>
+                <li><strong>Contact form:</strong> When you submit the contact form, we receive your name and email so we can respond. We do not use this information for unrelated marketing.</li>
+                <li><strong>Account & dashboard (if applicable):</strong> If you create an account (e.g. for blog or dashboard access), we store only what is needed to run the service (e.g. email, account data). We do not sell your personal information.</li>
               </ul>
             </section>
 
             <section>
-              <h2 className="text-xl font-semibold text-slate-900 mb-3">3. Information We Collect and Use</h2>
+              <h2 className="text-xl font-semibold text-slate-900 mb-3">3. Information We Collect</h2>
               <p>
-                We collect minimal information necessary to operate the services you use: account credentials and profile information when you register; content you submit (blogs, contact form); and technical data such as IP address or browser type where required for security or operation. We do not sell your personal information. We use this information only to provide, maintain, and improve our website and services.
+                We collect only what is necessary: email and name when you sign up for the workshop or use the contact form; account details if you register; and technical data (e.g. IP, browser) where needed for security or operation. We do not sell your data. We use it only to provide, maintain, and improve GetPaid Workshop and to communicate with you about the workshop and your inquiries.
               </p>
             </section>
 
             <section>
               <h2 className="text-xl font-semibold text-slate-900 mb-3">4. Cookies and Similar Technologies</h2>
               <p>
-                We may use cookies or similar technologies for essential site operation (e.g., keeping you logged in, preferences). We do not use cookies for third-party advertising or tracking beyond what is needed for the website to function.
+                We may use cookies or similar technologies for essential operation (e.g. keeping you logged in if you have an account). We do not use cookies for third-party advertising or tracking beyond what is needed for the website to function.
               </p>
             </section>
 
             <section>
               <h2 className="text-xl font-semibold text-slate-900 mb-3">5. Data Security and Retention</h2>
               <p>
-                We take reasonable measures to protect your data. Your blog content and account information are stored securely and are not shared with third parties for marketing. We retain data only as long as necessary to provide the services or as required by law.
+                We take reasonable steps to protect your data. Workshop signups and contact submissions are handled securely. We retain data only as long as necessary to provide the services or as required by law.
               </p>
             </section>
 
             <section>
               <h2 className="text-xl font-semibold text-slate-900 mb-3">6. Your Rights</h2>
               <p>
-                You may request access to, correction of, or deletion of your personal data where applicable. For account-related requests, use the contact form or the options in your dashboard where available.
+                You may request access to, correction of, or deletion of your personal data where applicable. Use the contact form or your account settings (if you have an account) to make a request.
               </p>
             </section>
 
             <section>
               <h2 className="text-xl font-semibold text-slate-900 mb-3">7. Contact</h2>
               <p>
-                For questions about this Privacy Policy or your data, use our <Link href="/contact" className="text-amber-600 hover:underline">Contact</Link> page.
+                For questions about this Privacy Policy or your data, use our <Link href="/contact" className="text-blue-600 hover:underline">Contact</Link> page.
               </p>
             </section>
           </div>
 
           <div className="mt-12 pt-8 border-t border-slate-200">
-            <Link href="/" className="text-amber-600 hover:underline font-medium">
+            <Link href="/" className="text-blue-600 hover:underline font-medium">
               ← Back to Home
             </Link>
           </div>

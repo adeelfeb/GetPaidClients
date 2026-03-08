@@ -3,7 +3,6 @@ import { useRouter } from 'next/router';
 import axios from 'axios';
 import Head from 'next/head';
 import Link from 'next/link';
-import Navbar from '../../components/designndev/Navbar';
 import Footer from '../../components/designndev/Footer';
 import styles from '../../styles/Blogs.module.css';
 
@@ -96,8 +95,7 @@ export default function BlogPostPage() {
           <title>Loading... | Design n Dev</title>
         </Head>
         <div className={styles.blogDetailPage}>
-          <Navbar />
-          <main className="pt-24 pb-16">
+          <main className="pt-10 pb-16 sm:pt-12">
             <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className={styles.blogsLoading}>
                 <p>Loading blog post...</p>
@@ -118,8 +116,7 @@ export default function BlogPostPage() {
           <meta name="robots" content="noindex" />
         </Head>
         <div className={styles.blogDetailPage}>
-          <Navbar />
-          <main className="pt-24 pb-16">
+          <main className="pt-10 pb-16 sm:pt-12">
             <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className={styles.blogsError}>
                 <h1 className="text-3xl font-bold mb-4">Blog Not Found</h1>
@@ -181,8 +178,7 @@ export default function BlogPostPage() {
         )}
       </Head>
       <div className={styles.blogDetailPage}>
-        <Navbar />
-        <main className="pt-24 pb-16">
+        <main className="pt-10 pb-16 sm:pt-12">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             {/* Breadcrumb */}
             <nav className={styles.blogDetailBreadcrumb} aria-label="Breadcrumb">

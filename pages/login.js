@@ -2,7 +2,6 @@ import { useMemo, useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { Eye, EyeOff } from 'lucide-react';
-import Navbar from '../components/designndev/Navbar';
 import Footer from '../components/designndev/Footer';
 import { AuthCardSkeleton } from '../components/Skeleton';
 import { useRecaptcha } from '../utils/useRecaptcha';
@@ -352,7 +351,6 @@ export default function LoginPage() {
   if (checkingAuth) {
     return (
       <div className="auth-page">
-        <Navbar />
         <div className="auth-shell">
           <AuthCardSkeleton />
         </div>
@@ -363,7 +361,6 @@ export default function LoginPage() {
 
   return (
     <div className="auth-page">
-      <Navbar />
       <div className="auth-shell">
         <div className="auth-card">
           <header className="card-header">

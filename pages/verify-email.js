@@ -1,7 +1,6 @@
 import { useMemo, useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import Navbar from '../components/designndev/Navbar';
 import Footer from '../components/designndev/Footer';
 import { safeParseJsonResponse } from '../utils/safeJsonResponse';
 
@@ -146,7 +145,6 @@ export default function VerifyEmailPage() {
 
   return (
     <div className="auth-page">
-      <Navbar />
       <div className="auth-shell">
         <div className="auth-card">
           <header className="card-header">

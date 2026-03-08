@@ -13,7 +13,7 @@ export default function Footer() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {/* Site Info */}
             <div>
-              <h3 className="text-lg font-bold mb-4 text-amber-600">
+              <h3 className="text-lg font-bold mb-4 text-blue-600">
                 GetPaid Workshop
               </h3>
               <p className="text-slate-600 text-sm">

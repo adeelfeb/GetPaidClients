@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import Head from 'next/head';
 import Link from 'next/link';
-import Navbar from '../components/designndev/Navbar';
 import Footer from '../components/designndev/Footer';
 import styles from '../styles/Blogs.module.css';
 
@@ -137,7 +136,6 @@ export default function BlogsPage() {
         />
       </Head>
       <div className={styles.blogsPage}>
-        <Navbar />
         <main>
           {/* Hero Section */}
           <section className={styles.blogsHero}>

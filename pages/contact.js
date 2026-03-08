@@ -1,5 +1,4 @@
 import Head from 'next/head';
-import Navbar from '../components/designndev/Navbar';
 import Footer from '../components/designndev/Footer';
 import ContactForm from '../components/designndev/ContactForm';
 
@@ -24,40 +23,39 @@ export default function ContactPage() {
         <meta property="og:type" content="website" />
       </Head>
       <div className="min-h-screen bg-slate-50">
-        <Navbar />
-        <main className="pt-24 pb-16">
+        <main className="pt-10 pb-16 sm:pt-12">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-10 sm:mb-12">
               <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-slate-900 mb-4">
                 Contact Us
               </h1>
               <p className="text-base sm:text-xl text-slate-600 max-w-2xl mx-auto px-1">
-                Have questions or want to join the workshop? Get in touch.
+                Questions about the workshop or ready to scale your AI software business? Get in touch—we&apos;re here to help.
               </p>
             </div>
 
             <div className="max-w-4xl mx-auto space-y-12">
               <ContactForm showHeading={false} />
 
-              <div className="bg-gradient-to-br from-gray-50 to-white rounded-2xl p-6 sm:p-8 md:p-12 shadow-lg w-full min-w-0">
+              <div className="bg-white rounded-2xl p-6 sm:p-8 md:p-12 shadow-sm border-2 border-slate-200 w-full min-w-0">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
                   <div className="text-center md:text-left">
-                    <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-4">Why Choose Us?</h3>
-                    <ul className="space-y-3 text-gray-600 text-sm sm:text-base">
-                      <li>Expert Full-Stack Development</li>
-                      <li>Modern Tech Stack (Next.js, MERN)</li>
-                      <li>Agile Development Process</li>
-                      <li>SEO Optimized Solutions</li>
+                    <h3 className="text-lg sm:text-xl font-bold text-slate-900 mb-4">What You Get</h3>
+                    <ul className="space-y-3 text-slate-600 text-sm sm:text-base">
+                      <li>How to start & scale an AI software business in 30 days</li>
+                      <li>No coding required—proven strategies that work</li>
+                      <li>Charge $1000 per client & keep 100% profits</li>
+                      <li>Workshop updates and exclusive insights</li>
                     </ul>
                   </div>
 
                   <div className="text-center md:text-left">
-                    <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-4">What We Offer</h3>
-                    <ul className="space-y-3 text-gray-600 text-sm sm:text-base">
-                      <li>Custom Full-Stack Development</li>
-                      <li>E-Commerce Platforms</li>
-                      <li>CMS Development (WordPress/Webflow)</li>
-                      <li>API Integration & Backend</li>
+                    <h3 className="text-lg sm:text-xl font-bold text-slate-900 mb-4">Reach Out For</h3>
+                    <ul className="space-y-3 text-slate-600 text-sm sm:text-base">
+                      <li>Workshop signup and webinar access</li>
+                      <li>AI Voice, CRM & WhatsApp marketing solutions</li>
+                      <li>Partnership or custom inquiries</li>
+                      <li>General questions about GetPaid Workshop</li>
                     </ul>
                   </div>
                 </div>

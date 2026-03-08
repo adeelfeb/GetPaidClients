@@ -1,5 +1,4 @@
 import Head from 'next/head';
-import Navbar from '../components/designndev/Navbar';
 import Footer from '../components/designndev/Footer';
 import Process from '../components/designndev/Process';
 
@@ -25,7 +24,6 @@ export default function ProcessPage() {
         <link rel="canonical" href="https://designndev.com/process" />
       </Head>
       <div className="min-h-screen bg-white">
-        <Navbar />
         <main>
           <Process />
         </main>
