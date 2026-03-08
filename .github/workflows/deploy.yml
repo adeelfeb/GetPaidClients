@@ -23,4 +23,4 @@ jobs:
       - name: Deploy
         run: |
           ssh -i ~/.ssh/id_rsa root@${{ secrets.DROPLET_HOST }} \
-          "bash /GetPaidClients/scripts/deploy.sh"
+          "bash /root/GetPaidClients/scripts/deploy.sh"

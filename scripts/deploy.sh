@@ -1,11 +1,12 @@
 #!/bin/bash
 set -e
 
-# Move to project directory
-cd /GetPaidClients
+# Project directory (under root's home on the server)
+PROJECT_DIR="/root/GetPaidClients"
+cd "$PROJECT_DIR"
 
 echo "🔄 Pulling latest code..."
-git config --global --add safe.directory /GetPaidClients
+git config --global --add safe.directory "$PROJECT_DIR"
 git fetch origin main
 git reset --hard origin/main
 
