@@ -51,8 +51,8 @@ export default function WorkshopPage() {
         <meta property="og:type" content="website" />
       </Head>
       <div className="min-h-screen bg-white">
-        {/* Hero — blue background, no header */}
-        <section className="relative min-h-[50vh] flex items-center pt-10 pb-12 sm:pt-14 sm:pb-16 px-4 sm:px-6 lg:px-8 overflow-hidden bg-blue-600 border-b-2 border-black">
+        {/* Hero — reduced height/padding */}
+        <section className="relative flex items-center pt-6 pb-8 sm:pt-8 sm:pb-10 px-4 sm:px-6 lg:px-8 overflow-hidden bg-blue-600 border-b-2 border-black">
           <div className="max-w-3xl mx-auto text-center relative z-10">
             <motion.h1
               initial={{ opacity: 0, y: 20 }}
