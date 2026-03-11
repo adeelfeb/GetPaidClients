@@ -99,19 +99,19 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Products / Solutions — golden headline, white bg */}
-      <section className="py-20 sm:py-28 px-4 sm:px-6 lg:px-8 bg-white">
+      {/* Products / Solutions — blue bg, bright golden headline */}
+      <section className="py-20 sm:py-28 px-4 sm:px-6 lg:px-8 bg-[#1e4976]">
         <div className="max-w-6xl mx-auto">
-          <motion.p {...stagger(0)} className="text-[#1e4976] font-medium text-sm uppercase tracking-wider text-center">
+          <motion.p {...stagger(0)} className="text-yellow-400 font-medium text-sm uppercase tracking-wider text-center">
             Empower Your Journey
           </motion.p>
-          <motion.h2 {...stagger(0.05)} className="mt-2 text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-[#b8860b] text-center">
+          <motion.h2 {...stagger(0.05)} className="mt-2 text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-[#fcd34d] text-center">
             Learn How to Build Successful Facebook & Google Ads To Get 100&apos;s Customers Per Day With AI Automation...
           </motion.h2>
-          <motion.h3 {...stagger(0.1)} className="mt-2 text-lg sm:text-xl md:text-2xl font-semibold text-slate-600 text-center">
+          <motion.h3 {...stagger(0.1)} className="mt-2 text-lg sm:text-xl md:text-2xl font-semibold text-white/95 text-center">
             Become an Official Owner of An AI Software...
           </motion.h3>
-          <motion.p {...stagger(0.12)} className="mt-2 text-base sm:text-lg text-slate-600 text-center">
+          <motion.p {...stagger(0.12)} className="mt-2 text-base sm:text-lg text-white/90 text-center">
             Which has 100 More Features like-:
           </motion.p>
 
