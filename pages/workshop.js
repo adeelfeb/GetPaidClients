@@ -1,17 +1,59 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect, useRef, useCallback } from 'react'
 import Head from 'next/head'
 import Link from 'next/link'
 import Footer from '../components/designndev/Footer'
 import { useRecaptcha } from '../utils/useRecaptcha'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
+
+/** Google Drive file preview embed (client webinar). */
+const WEBINAR_DRIVE_EMBED =
+  'https://drive.google.com/file/d/1CXYJg83DGpJKfvpKaRg3GGiqMxtdAB3c/preview'
+
+const REVEAL_SCHEDULE_CTA_AFTER_MS = 38 * 60 * 1000
 
 export default function WorkshopPage() {
   const { execute: executeRecaptcha, isAvailable: recaptchaAvailable } = useRecaptcha()
   const [email, setEmail] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [message, setMessage] = useState(null)
+
+  const [showScheduleCta, setShowScheduleCta] = useState(false)
+  const [overlayDismissed, setOverlayDismissed] = useState(false)
+  const [gifFailed, setGifFailed] = useState(false)
+  const scheduleTimerRef = useRef(null)
+  const mp4Url = typeof process !== 'undefined' ? process.env.NEXT_PUBLIC_WEBINAR_MP4_URL : ''
+
+  const clearScheduleTimer = useCallback(() => {
+    if (scheduleTimerRef.current != null) {
+      window.clearTimeout(scheduleTimerRef.current)
+      scheduleTimerRef.current = null
+    }
+  }, [])
+
+  useEffect(() => () => clearScheduleTimer(), [clearScheduleTimer])
+
+  const startScheduleRevealTimer = useCallback(() => {
+    if (scheduleTimerRef.current != null) return
+    scheduleTimerRef.current = window.setTimeout(() => {
+      setShowScheduleCta(true)
+      scheduleTimerRef.current = null
+    }, REVEAL_SCHEDULE_CTA_AFTER_MS)
+  }, [])
+
+  const handleVideoTimeUpdate = useCallback(
+    (e) => {
+      const el = e.currentTarget
+      if (el.currentTime >= 38 * 60) setShowScheduleCta(true)
+    },
+    []
+  )
+
+  const handleDismissWebinarOverlay = useCallback(() => {
+    setOverlayDismissed(true)
+    startScheduleRevealTimer()
+  }, [startScheduleRevealTimer])
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -46,12 +88,14 @@ export default function WorkshopPage() {
     <>
       <Head>
         <title>Workshop | GetPaid Workshop — Launch Your Marketing Journey</title>
-        <meta name="description" content="Join our free workshop to learn how to start an AI software reselling business and charge $1000 per client. Launch your marketing journey today." />
+        <meta
+          name="description"
+          content="Join our free workshop to learn how to start an AI software reselling business and charge $1000 per client. Launch your marketing journey today."
+        />
         <meta property="og:title" content="Workshop | GetPaid Workshop" />
         <meta property="og:type" content="website" />
       </Head>
       <div className="min-h-screen bg-white">
-        {/* Hero — reduced height/padding */}
         <section className="relative flex items-center pt-6 pb-8 sm:pt-8 sm:pb-10 px-4 sm:px-6 lg:px-8 overflow-hidden bg-blue-600 border-b-2 border-black">
           <div className="max-w-3xl mx-auto text-center relative z-10">
             <motion.h1
@@ -73,7 +117,105 @@ export default function WorkshopPage() {
           </div>
         </section>
 
-        {/* Benefits strip */}
+        {/* Webinar player + streaming strip */}
+        <section className="py-10 sm:py-14 px-4 sm:px-6 lg:px-8 bg-slate-50 border-b-2 border-slate-200">
+          <div className="max-w-5xl mx-auto">
+            <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 text-center mb-6 sm:mb-8">
+              Workshop webinar
+            </h2>
+            <p className="text-center text-slate-600 max-w-2xl mx-auto mb-6 text-sm sm:text-base">
+              {mp4Url
+                ? 'The “Schedule a Call” button appears automatically after 38 minutes of playback.'
+                : 'Tap “Start watching” once, then enjoy the full session. The “Schedule a Call” button appears 38 minutes after you start (required for Google Drive embeds). For pixel-accurate timing tied to the video scrubber, host an MP4 and set NEXT_PUBLIC_WEBINAR_MP4_URL in your environment.'}
+            </p>
+
+            <div className="relative rounded-2xl overflow-hidden border-2 border-black shadow-xl bg-black aspect-video w-full max-h-[80vh]">
+              {mp4Url ? (
+                <video
+                  src={mp4Url}
+                  className="w-full h-full object-contain bg-black"
+                  controls
+                  playsInline
+                  onTimeUpdate={handleVideoTimeUpdate}
+                />
+              ) : (
+                <>
+                  <iframe
+                    title="Workshop webinar video"
+                    src={WEBINAR_DRIVE_EMBED}
+                    className="absolute inset-0 w-full h-full border-0"
+                    allow="autoplay; fullscreen; encrypted-media; picture-in-picture"
+                    allowFullScreen
+                  />
+                  {!overlayDismissed && (
+                    <button
+                      type="button"
+                      onClick={handleDismissWebinarOverlay}
+                      className="absolute inset-0 z-10 flex flex-col items-center justify-center gap-3 bg-slate-900/75 hover:bg-slate-900/65 text-white px-6 transition-colors focus:outline-none focus:ring-4 focus:ring-yellow-400 focus:ring-inset"
+                    >
+                      <span className="text-lg sm:text-xl font-bold text-center">Start watching</span>
+                      <span className="text-sm text-white/85 text-center max-w-md">
+                        Opens the player and starts the 38-minute timer for the scheduling option (Drive embed cannot read video position in the browser).
+                      </span>
+                    </button>
+                  )}
+                </>
+              )}
+            </div>
+
+            <div className="mt-8 rounded-2xl overflow-hidden border-2 border-slate-300 bg-slate-900 shadow-inner">
+              {!gifFailed ? (
+                <img
+                  src="/workshop-streaming.gif"
+                  alt="Live streaming"
+                  className="w-full h-auto min-h-[100px] max-h-[320px] sm:max-h-[400px] object-cover object-center block"
+                  onError={() => setGifFailed(true)}
+                />
+              ) : (
+                <div
+                  className="flex flex-col items-center justify-center gap-3 py-16 px-4 bg-gradient-to-r from-slate-800 via-slate-700 to-slate-800"
+                  role="img"
+                  aria-label="Streaming placeholder"
+                >
+                  <div className="flex gap-1.5 h-10 items-end">
+                    {[0.4, 0.7, 1, 0.6, 0.9, 0.5].map((s, i) => (
+                      <span
+                        key={i}
+                        className="w-2 rounded-full bg-emerald-400/90 animate-pulse"
+                        style={{ height: `${s * 100}%`, animationDelay: `${i * 0.12}s` }}
+                      />
+                    ))}
+                  </div>
+                  <p className="text-slate-400 text-sm text-center">
+                    Add your long streaming GIF as <code className="text-slate-300">public/workshop-streaming.gif</code>
+                  </p>
+                </div>
+              )}
+            </div>
+
+            <div className="mt-10 min-h-[5rem]" aria-live="polite">
+              <AnimatePresence>
+                {showScheduleCta && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 16 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 8 }}
+                    transition={{ duration: 0.35 }}
+                    className="flex justify-center"
+                  >
+                    <Link
+                      href="/contact"
+                      className="inline-flex items-center justify-center px-10 py-5 sm:px-14 sm:py-6 text-lg sm:text-2xl font-bold text-slate-900 bg-yellow-400 hover:bg-yellow-300 rounded-2xl border-2 border-black shadow-lg transition-all focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:ring-offset-2"
+                    >
+                      Schedule a Call Now
+                    </Link>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+          </div>
+        </section>
+
         <section className="py-10 sm:py-12 px-4 sm:px-6 lg:px-8 bg-blue-600 border-y-2 border-black">
           <div className="max-w-4xl mx-auto">
             <p className="text-center text-yellow-400 text-sm font-medium uppercase tracking-wider mb-6">
@@ -92,7 +234,11 @@ export default function WorkshopPage() {
               <div>
                 <div className="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-yellow-400/20 text-yellow-400 mb-3">
                   <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                    />
                   </svg>
                 </div>
                 <h3 className="font-semibold text-white">$1000 per client</h3>
@@ -101,7 +247,11 @@ export default function WorkshopPage() {
               <div>
                 <div className="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-yellow-400/20 text-yellow-400 mb-3">
                   <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"
+                    />
                   </svg>
                 </div>
                 <h3 className="font-semibold text-white">AI tools & support</h3>
@@ -111,7 +261,6 @@ export default function WorkshopPage() {
           </div>
         </section>
 
-        {/* Main signup card */}
         <main className="py-12 sm:py-16 px-4 sm:px-6 lg:px-8">
           <div className="max-w-2xl mx-auto">
             <motion.section
@@ -134,7 +283,9 @@ export default function WorkshopPage() {
               </p>
               <form onSubmit={handleSubmit} className="mt-10">
                 <div className="flex flex-col sm:flex-row gap-3">
-                  <label htmlFor="workshop-email" className="sr-only">Your best email address</label>
+                  <label htmlFor="workshop-email" className="sr-only">
+                    Your best email address
+                  </label>
                   <input
                     id="workshop-email"
                     type="email"
@@ -154,7 +305,9 @@ export default function WorkshopPage() {
                   </button>
                 </div>
                 {message && (
-                  <p className={`mt-4 text-sm font-medium ${message.type === 'success' ? 'text-emerald-600' : 'text-red-600'}`}>
+                  <p
+                    className={`mt-4 text-sm font-medium ${message.type === 'success' ? 'text-emerald-600' : 'text-red-600'}`}
+                  >
                     {message.text}
                   </p>
                 )}
@@ -172,7 +325,6 @@ export default function WorkshopPage() {
           </div>
         </main>
 
-        {/* Trust line */}
         <section className="py-10 px-4 sm:px-6 lg:px-8 bg-blue-600 border-t-2 border-black">
           <div className="max-w-2xl mx-auto text-center">
             <p className="text-white/90 text-sm">
