@@ -4,6 +4,7 @@ import { useState, useEffect, useRef, useCallback } from 'react'
 import Head from 'next/head'
 import Link from 'next/link'
 import Footer from '../components/designndev/Footer'
+import RegisterWorkshopModal from '../components/RegisterWorkshopModal'
 import { useRecaptcha } from '../utils/useRecaptcha'
 import { motion, AnimatePresence } from 'framer-motion'
 
@@ -20,6 +21,7 @@ export default function WorkshopPage() {
   const [message, setMessage] = useState(null)
 
   const [showScheduleCta, setShowScheduleCta] = useState(false)
+  const [registerOpen, setRegisterOpen] = useState(false)
   const scheduleTimerRef = useRef(null)
   const mp4Url = typeof process !== 'undefined' ? process.env.NEXT_PUBLIC_WEBINAR_MP4_URL : ''
 
@@ -52,6 +54,13 @@ export default function WorkshopPage() {
     },
     []
   )
+
+  const handleRegisterModalSubmit = useCallback(() => {
+    setRegisterOpen(false)
+    requestAnimationFrame(() => {
+      document.getElementById('workshop-signup')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    })
+  }, [])
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -94,6 +103,11 @@ export default function WorkshopPage() {
         <meta property="og:type" content="website" />
       </Head>
       <div className="min-h-screen bg-white">
+        <RegisterWorkshopModal
+          isOpen={registerOpen}
+          onClose={() => setRegisterOpen(false)}
+          onSubmit={handleRegisterModalSubmit}
+        />
         <section className="relative flex items-center pt-6 pb-8 sm:pt-8 sm:pb-10 px-4 sm:px-6 lg:px-8 overflow-hidden bg-blue-600 border-b-2 border-black">
           <div className="max-w-3xl mx-auto text-center relative z-10">
             <motion.h1
@@ -147,6 +161,16 @@ export default function WorkshopPage() {
                   />
                 )}
               </div>
+            </div>
+
+            <div className="mt-8 sm:mt-10 flex justify-center">
+              <button
+                type="button"
+                onClick={() => setRegisterOpen(true)}
+                className="inline-flex w-full max-w-md sm:w-auto items-center justify-center px-10 py-4 sm:px-12 sm:py-5 text-lg sm:text-xl font-bold text-slate-900 bg-yellow-400 hover:bg-yellow-300 rounded-2xl border-2 border-black shadow-lg transition-all focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:ring-offset-2 focus:ring-offset-white"
+              >
+                Enroll for free
+              </button>
             </div>
 
             <div className="mt-10 min-h-[5rem]" aria-live="polite">
@@ -220,11 +244,12 @@ export default function WorkshopPage() {
         <main className="py-12 sm:py-16 px-4 sm:px-6 lg:px-8">
           <div className="max-w-2xl mx-auto">
             <motion.section
+              id="workshop-signup"
               initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.4 }}
-              className="relative rounded-3xl bg-white border-2 border-black shadow-xl p-8 sm:p-10 md:p-12"
+              className="relative rounded-3xl bg-white border-2 border-black shadow-xl p-8 sm:p-10 md:p-12 scroll-mt-24"
             >
               <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2">
                 <span className="inline-block px-4 py-1.5 rounded-full bg-yellow-400 text-slate-900 text-sm font-semibold">
