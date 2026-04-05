@@ -20,8 +20,6 @@ export default function WorkshopPage() {
   const [message, setMessage] = useState(null)
 
   const [showScheduleCta, setShowScheduleCta] = useState(false)
-  const [overlayDismissed, setOverlayDismissed] = useState(false)
-  const [gifFailed, setGifFailed] = useState(false)
   const scheduleTimerRef = useRef(null)
   const mp4Url = typeof process !== 'undefined' ? process.env.NEXT_PUBLIC_WEBINAR_MP4_URL : ''
 
@@ -42,6 +40,11 @@ export default function WorkshopPage() {
     }, REVEAL_SCHEDULE_CTA_AFTER_MS)
   }, [])
 
+  useEffect(() => {
+    if (mp4Url) return
+    startScheduleRevealTimer()
+  }, [mp4Url, startScheduleRevealTimer])
+
   const handleVideoTimeUpdate = useCallback(
     (e) => {
       const el = e.currentTarget
@@ -49,11 +52,6 @@ export default function WorkshopPage() {
     },
     []
   )
-
-  const handleDismissWebinarOverlay = useCallback(() => {
-    setOverlayDismissed(true)
-    startScheduleRevealTimer()
-  }, [startScheduleRevealTimer])
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -117,80 +115,38 @@ export default function WorkshopPage() {
           </div>
         </section>
 
-        {/* Webinar player + streaming strip */}
-        <section className="py-10 sm:py-14 px-4 sm:px-6 lg:px-8 bg-slate-50 border-b-2 border-slate-200">
-          <div className="max-w-5xl mx-auto">
-            <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 text-center mb-6 sm:mb-8">
+        {/* Webinar player */}
+        <section className="py-12 sm:py-16 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-slate-100 via-slate-50 to-white border-b border-slate-200/80">
+          <div className="max-w-6xl mx-auto">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-slate-900 text-center mb-3 sm:mb-4 tracking-tight">
               Workshop webinar
             </h2>
-            <p className="text-center text-slate-600 max-w-2xl mx-auto mb-6 text-sm sm:text-base">
+            <p className="text-center text-slate-600 max-w-xl mx-auto mb-8 sm:mb-10 text-sm sm:text-base leading-relaxed">
               {mp4Url
-                ? 'The “Schedule a Call” button appears automatically after 38 minutes of playback.'
-                : 'Tap “Start watching” once, then enjoy the full session. The “Schedule a Call” button appears 38 minutes after you start (required for Google Drive embeds). For pixel-accurate timing tied to the video scrubber, host an MP4 and set NEXT_PUBLIC_WEBINAR_MP4_URL in your environment.'}
+                ? 'The “Schedule a Call” option appears after 38 minutes of playback.'
+                : '“Schedule a Call” unlocks 38 minutes after you open this page.'}
             </p>
 
-            <div className="relative rounded-2xl overflow-hidden border-2 border-black shadow-xl bg-black aspect-video w-full max-h-[80vh]">
-              {mp4Url ? (
-                <video
-                  src={mp4Url}
-                  className="w-full h-full object-contain bg-black"
-                  controls
-                  playsInline
-                  onTimeUpdate={handleVideoTimeUpdate}
-                />
-              ) : (
-                <>
+            <div className="mx-auto max-w-5xl rounded-2xl sm:rounded-3xl p-1 sm:p-1.5 bg-gradient-to-br from-slate-300/90 via-white to-blue-200/70 shadow-[0_25px_60px_-15px_rgba(15,23,42,0.35)] ring-1 ring-slate-900/10">
+              <div className="relative overflow-hidden rounded-[0.875rem] sm:rounded-[1.2rem] bg-slate-950 shadow-inner ring-2 ring-black/20 aspect-video w-full max-h-[80vh]">
+                {mp4Url ? (
+                  <video
+                    src={mp4Url}
+                    className="w-full h-full object-contain bg-black"
+                    controls
+                    playsInline
+                    onTimeUpdate={handleVideoTimeUpdate}
+                  />
+                ) : (
                   <iframe
                     title="Workshop webinar video"
                     src={WEBINAR_DRIVE_EMBED}
-                    className="absolute inset-0 w-full h-full border-0"
+                    className="absolute inset-0 h-full w-full border-0"
                     allow="autoplay; fullscreen; encrypted-media; picture-in-picture"
                     allowFullScreen
                   />
-                  {!overlayDismissed && (
-                    <button
-                      type="button"
-                      onClick={handleDismissWebinarOverlay}
-                      className="absolute inset-0 z-10 flex flex-col items-center justify-center gap-3 bg-slate-900/75 hover:bg-slate-900/65 text-white px-6 transition-colors focus:outline-none focus:ring-4 focus:ring-yellow-400 focus:ring-inset"
-                    >
-                      <span className="text-lg sm:text-xl font-bold text-center">Start watching</span>
-                      <span className="text-sm text-white/85 text-center max-w-md">
-                        Opens the player and starts the 38-minute timer for the scheduling option (Drive embed cannot read video position in the browser).
-                      </span>
-                    </button>
-                  )}
-                </>
-              )}
-            </div>
-
-            <div className="mt-8 rounded-2xl overflow-hidden border-2 border-slate-300 bg-slate-900 shadow-inner">
-              {!gifFailed ? (
-                <img
-                  src="/workshop-streaming.gif"
-                  alt="Live streaming"
-                  className="w-full h-auto min-h-[100px] max-h-[320px] sm:max-h-[400px] object-cover object-center block"
-                  onError={() => setGifFailed(true)}
-                />
-              ) : (
-                <div
-                  className="flex flex-col items-center justify-center gap-3 py-16 px-4 bg-gradient-to-r from-slate-800 via-slate-700 to-slate-800"
-                  role="img"
-                  aria-label="Streaming placeholder"
-                >
-                  <div className="flex gap-1.5 h-10 items-end">
-                    {[0.4, 0.7, 1, 0.6, 0.9, 0.5].map((s, i) => (
-                      <span
-                        key={i}
-                        className="w-2 rounded-full bg-emerald-400/90 animate-pulse"
-                        style={{ height: `${s * 100}%`, animationDelay: `${i * 0.12}s` }}
-                      />
-                    ))}
-                  </div>
-                  <p className="text-slate-400 text-sm text-center">
-                    Add your long streaming GIF as <code className="text-slate-300">public/workshop-streaming.gif</code>
-                  </p>
-                </div>
-              )}
+                )}
+              </div>
             </div>
 
             <div className="mt-10 min-h-[5rem]" aria-live="polite">

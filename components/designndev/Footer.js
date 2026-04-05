@@ -23,7 +23,13 @@ export default function Footer({ variant = 'default', onEnrollClick }) {
               </Link>
             </div>
             {isLanding ? (
-              <div className="w-full sm:w-auto flex justify-center sm:justify-end">
+              <div className="w-full sm:w-auto flex flex-col sm:flex-row items-center justify-center sm:justify-end gap-4">
+                <Link
+                  href="/workshop"
+                  className="text-sm font-medium text-slate-300 hover:text-white underline-offset-4 hover:underline transition-colors whitespace-nowrap"
+                >
+                  Workshop
+                </Link>
                 {typeof onEnrollClick === 'function' ? (
                   <button type="button" onClick={onEnrollClick} className={landingCtaClass}>
                     Enroll Me for the Workshop
@@ -36,6 +42,12 @@ export default function Footer({ variant = 'default', onEnrollClick }) {
               </div>
             ) : (
               <div className="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto">
+                <Link
+                  href="/workshop"
+                  className="text-sm font-medium text-slate-300 hover:text-white underline-offset-4 hover:underline transition-colors whitespace-nowrap"
+                >
+                  Workshop
+                </Link>
                 <span className="text-sm text-slate-300 whitespace-nowrap">Subscribe to our updates</span>
                 <Link href="/workshop" className={defaultCtaClass}>
                   Join Now

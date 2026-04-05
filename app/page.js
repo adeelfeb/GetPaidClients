@@ -289,47 +289,51 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-white to-slate-50 border-y-2 border-slate-200">
-        <div className="max-w-5xl mx-auto">
-          <motion.h2 {...stagger(0)} className="text-2xl sm:text-3xl font-bold text-slate-900 text-center mb-12">
-            As seen on
-          </motion.h2>
-          <motion.div {...stagger(0.1)} className="flex flex-wrap items-center justify-center gap-10 sm:gap-16">
-            <div className="rounded-xl bg-white border border-slate-200 shadow-lg p-6 flex items-center justify-center brightness-100 hover:brightness-110 transition-all duration-300 hover:shadow-xl hover:border-slate-300 min-h-[100px] w-[220px] sm:w-[260px] md:w-[280px]">
-              <div className="relative w-full h-16 sm:h-20 md:h-24">
-                <Image
-                  src="/as-seen-international-business-times.jpg"
-                  alt="International Business Times"
-                  fill
-                  className="object-contain object-center"
-                  sizes="280px"
-                />
-              </div>
+      <section className="py-20 sm:py-28 lg:py-36 w-full max-w-none px-0 bg-gradient-to-b from-white to-slate-50 border-y-2 border-slate-200 overflow-x-hidden">
+        <motion.h2
+          {...stagger(0)}
+          className="text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-900 text-center mb-14 sm:mb-16 lg:mb-20 px-4 sm:px-6"
+        >
+          As seen on
+        </motion.h2>
+        <motion.div
+          {...stagger(0.1)}
+          className="flex flex-row flex-nowrap items-stretch w-full shadow-lg"
+        >
+          <div className="flex-1 min-w-0 bg-white border-y border-l border-r border-slate-200 p-4 sm:p-6 lg:p-10 flex items-center justify-center brightness-100 hover:brightness-110 transition-all duration-300 hover:shadow-xl min-h-[120px] sm:min-h-[150px] lg:min-h-[180px]">
+            <div className="relative w-full h-24 sm:h-28 md:h-32 lg:h-40">
+              <Image
+                src="/as-seen-international-business-times.jpg"
+                alt="International Business Times"
+                fill
+                className="object-contain object-center"
+                sizes="33vw"
+              />
             </div>
-            <div className="rounded-xl bg-white border border-slate-200 shadow-lg p-6 flex items-center justify-center brightness-100 hover:brightness-110 transition-all duration-300 hover:shadow-xl hover:border-slate-300 min-h-[100px] w-[160px] sm:w-[180px] md:w-[200px]">
-              <div className="relative w-full h-16 sm:h-20 md:h-24">
-                <Image
-                  src="/as-seen-asian-news.png"
-                  alt="Asian News"
-                  fill
-                  className="object-contain object-center"
-                  sizes="200px"
-                />
-              </div>
+          </div>
+          <div className="flex-1 min-w-0 bg-white border-y border-r border-slate-200 p-4 sm:p-6 lg:p-10 flex items-center justify-center brightness-100 hover:brightness-110 transition-all duration-300 hover:shadow-xl min-h-[120px] sm:min-h-[150px] lg:min-h-[180px]">
+            <div className="relative w-full h-24 sm:h-28 md:h-32 lg:h-40">
+              <Image
+                src="/as-seen-asian-news.png"
+                alt="Asian News"
+                fill
+                className="object-contain object-center"
+                sizes="33vw"
+              />
             </div>
-            <div className="rounded-xl bg-white border border-slate-200 shadow-lg p-6 flex items-center justify-center brightness-100 hover:brightness-110 transition-all duration-300 hover:shadow-xl hover:border-slate-300 min-h-[100px] w-[180px] sm:w-[200px] md:w-[220px]">
-              <div className="relative w-full h-16 sm:h-20 md:h-24">
-                <Image
-                  src="/as-seen-business-standard.png"
-                  alt="Business Standard"
-                  fill
-                  className="object-contain object-center"
-                  sizes="220px"
-                />
-              </div>
+          </div>
+          <div className="flex-1 min-w-0 bg-white border-y border-r border-slate-200 p-4 sm:p-6 lg:p-10 flex items-center justify-center brightness-100 hover:brightness-110 transition-all duration-300 hover:shadow-xl min-h-[120px] sm:min-h-[150px] lg:min-h-[180px]">
+            <div className="relative w-full h-24 sm:h-28 md:h-32 lg:h-40">
+              <Image
+                src="/as-seen-business-standard.png"
+                alt="Business Standard"
+                fill
+                className="object-contain object-center"
+                sizes="33vw"
+              />
             </div>
-          </motion.div>
-        </div>
+          </div>
+        </motion.div>
       </section>
 
       <section className="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 bg-white">
