@@ -70,13 +70,13 @@ export default function Home() {
     <main className="min-h-screen bg-white">
       <RegisterWorkshopModal isOpen={registerOpen} onClose={() => setRegisterOpen(false)} onSubmit={handleRegisterSubmit} />
 
-      <section className="relative min-h-0 flex flex-col items-center pt-10 pb-16 sm:pt-14 sm:pb-20 px-4 sm:px-6 lg:px-8 overflow-hidden bg-[#0f2d4a] border-b-2 border-black">
-        <div className="max-w-3xl mx-auto w-full flex flex-col items-center text-center relative z-10">
+      <section className="relative min-h-0 flex flex-col items-center pt-8 pb-12 sm:pt-10 sm:pb-16 px-6 sm:px-10 md:px-14 lg:px-20 xl:px-28 overflow-hidden bg-[#0f2d4a] border-b-2 border-black">
+        <div className="w-full max-w-6xl xl:max-w-7xl mx-auto flex flex-col items-center text-center relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="mb-6 sm:mb-8"
+            className="mb-4 sm:mb-5"
           >
             <Link href="/" className="inline-block" aria-label="GetPaid Clients home">
               <Image
@@ -92,16 +92,26 @@ export default function Home() {
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-[1.12] tracking-tight text-center"
+            transition={{ duration: 0.6, delay: 0.04 }}
+            className="mt-2 sm:mt-3 w-full px-1 sm:px-2 md:px-4 text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-white leading-[1.12] sm:leading-[1.1] tracking-normal text-center"
           >
-            How to Start an AI Software Reselling Business From Scratch — and Charge $1,000+ Per Client While Keeping 100% of the Profits...!
+            <span className="block">How to Start an AI Software</span>
+            <span className="block mt-1.5 sm:mt-2">Reselling Business From Scratch</span>
+            <span className="block mt-2 sm:mt-3 text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold text-white/95">— and</span>
           </motion.h1>
+          <motion.p
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.55, delay: 0.08 }}
+            className="mt-3 sm:mt-4 w-full max-w-5xl mx-auto px-2 sm:px-4 text-xl sm:text-2xl md:text-3xl lg:text-4xl font-semibold text-[#fcd34d] text-center leading-snug"
+          >
+            Charge $1,000+ Per Client While Keeping 100% of the Profits
+          </motion.p>
           <motion.p
             initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.55, delay: 0.06 }}
-            className="mt-4 sm:mt-5 text-base sm:text-lg md:text-xl text-white/90 leading-relaxed max-w-2xl mx-auto"
+            transition={{ duration: 0.55, delay: 0.12 }}
+            className="mt-3 sm:mt-4 w-full max-w-5xl xl:max-w-6xl mx-auto px-2 sm:px-4 text-base sm:text-lg md:text-xl text-white/90 leading-relaxed"
           >
             No fluff — just the same systems we use to land international clients and scale with AI automation, funnels, and recurring offers.
           </motion.p>
@@ -109,16 +119,24 @@ export default function Home() {
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="mt-6 sm:mt-8 w-full max-w-md sm:max-w-lg mx-auto relative"
+            className="mt-4 sm:mt-5 w-full max-w-md sm:max-w-lg mx-auto relative"
           >
-            <Image
-              src="/hero-section-image.jpeg"
-              alt="AI Software Reselling Business"
-              width={800}
-              height={800}
-              className="w-full h-auto rounded-xl border-2 border-black shadow-lg object-cover"
-              priority
-            />
+            <Link
+              href={enrolHref}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block rounded-xl focus:outline-none focus-visible:ring-2 focus-visible:ring-yellow-400 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0f2d4a]"
+              aria-label="Workshop (opens in new tab)"
+            >
+              <Image
+                src="/hero-section-image.jpeg"
+                alt=""
+                width={800}
+                height={800}
+                className="w-full h-auto rounded-xl border-2 border-black shadow-lg object-cover transition-opacity hover:opacity-95"
+                priority
+              />
+            </Link>
             <div
               className="absolute inset-0 flex items-center justify-center pointer-events-none"
               aria-hidden
@@ -132,7 +150,7 @@ export default function Home() {
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="mt-5 sm:mt-6 text-base sm:text-lg md:text-xl text-white/95 leading-relaxed text-center"
+            className="mt-3 sm:mt-4 w-full max-w-5xl xl:max-w-6xl mx-auto px-2 sm:px-4 text-base sm:text-lg md:text-xl text-white/95 leading-relaxed text-center"
           >
             <i>I will reveal the secrets on how my agency does $200,000/yr in USA</i>
           </motion.p>
@@ -140,7 +158,7 @@ export default function Home() {
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.3 }}
-            className="mt-8 sm:mt-10"
+            className="mt-6 sm:mt-8"
           >
             <button type="button" onClick={openRegister} className={ctaHero}>
               Enroll Me for the Workshop
