@@ -119,7 +119,7 @@ export default function Home() {
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="mt-4 sm:mt-5 w-full max-w-md sm:max-w-lg mx-auto relative"
+            className="mt-4 sm:mt-5 w-full max-w-md sm:max-w-lg mx-auto"
           >
             <Link
               href={enrolHref}
@@ -137,14 +137,6 @@ export default function Home() {
                 priority
               />
             </Link>
-            <div
-              className="absolute inset-0 flex items-center justify-center pointer-events-none"
-              aria-hidden
-            >
-              <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-white/50 backdrop-blur-md flex items-center justify-center shadow-xl ring-2 ring-white/40 ring-offset-2 ring-offset-black/10 border border-white/30">
-                <div className="w-0 h-0 border-t-[8px] border-t-transparent border-l-[14px] border-l-slate-800 border-b-[8px] border-b-transparent sm:border-t-[9px] sm:border-b-[9px] sm:border-l-[16px] ml-0.5" />
-              </div>
-            </div>
           </motion.div>
           <motion.p
             initial={{ opacity: 0, y: 16 }}

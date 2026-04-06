@@ -1,18 +1,19 @@
 'use client'
 
-import { useState, useEffect, useRef, useCallback } from 'react'
+import { useState } from 'react'
 import Head from 'next/head'
 import Link from 'next/link'
 import Footer from '../components/designndev/Footer'
-import RegisterWorkshopModal from '../components/RegisterWorkshopModal'
 import { useRecaptcha } from '../utils/useRecaptcha'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion } from 'framer-motion'
 
 /** Google Drive file preview embed (client webinar). */
 const WEBINAR_DRIVE_EMBED =
-  'https://drive.google.com/file/d/1CXYJg83DGpJKfvpKaRg3GGiqMxtdAB3c/preview'
+  'https://drive.google.com/file/d/1CXYJg83DGpJKfvpKaRg3GGiqMxtdAB3c/preview?embedded=true'
 
-const REVEAL_SCHEDULE_CTA_AFTER_MS = 38 * 60 * 1000
+// Drive’s UI is inside a cross-origin iframe — no API to remove controls; sandbox without allow-popups blocks pop-out.
+const DRIVE_IFRAME_SANDBOX =
+  'allow-scripts allow-same-origin allow-forms allow-modals allow-presentation allow-orientation-lock allow-pointer-lock'
 
 export default function WorkshopPage() {
   const { execute: executeRecaptcha, isAvailable: recaptchaAvailable } = useRecaptcha()
@@ -20,47 +21,7 @@ export default function WorkshopPage() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [message, setMessage] = useState(null)
 
-  const [showScheduleCta, setShowScheduleCta] = useState(false)
-  const [registerOpen, setRegisterOpen] = useState(false)
-  const scheduleTimerRef = useRef(null)
   const mp4Url = typeof process !== 'undefined' ? process.env.NEXT_PUBLIC_WEBINAR_MP4_URL : ''
-
-  const clearScheduleTimer = useCallback(() => {
-    if (scheduleTimerRef.current != null) {
-      window.clearTimeout(scheduleTimerRef.current)
-      scheduleTimerRef.current = null
-    }
-  }, [])
-
-  useEffect(() => () => clearScheduleTimer(), [clearScheduleTimer])
-
-  const startScheduleRevealTimer = useCallback(() => {
-    if (scheduleTimerRef.current != null) return
-    scheduleTimerRef.current = window.setTimeout(() => {
-      setShowScheduleCta(true)
-      scheduleTimerRef.current = null
-    }, REVEAL_SCHEDULE_CTA_AFTER_MS)
-  }, [])
-
-  useEffect(() => {
-    if (mp4Url) return
-    startScheduleRevealTimer()
-  }, [mp4Url, startScheduleRevealTimer])
-
-  const handleVideoTimeUpdate = useCallback(
-    (e) => {
-      const el = e.currentTarget
-      if (el.currentTime >= 38 * 60) setShowScheduleCta(true)
-    },
-    []
-  )
-
-  const handleRegisterModalSubmit = useCallback(() => {
-    setRegisterOpen(false)
-    requestAnimationFrame(() => {
-      document.getElementById('workshop-signup')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
-    })
-  }, [])
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -94,104 +55,115 @@ export default function WorkshopPage() {
   return (
     <>
       <Head>
-        <title>Workshop | GetPaid Workshop — Launch Your Marketing Journey</title>
+        <title>Workshop | GetPaid Workshop</title>
         <meta
           name="description"
-          content="Join our free workshop to learn how to start an AI software reselling business and charge $1000 per client. Launch your marketing journey today."
+          content="Join our free workshop to learn how to start an AI software reselling business and charge $1000 per client."
         />
         <meta property="og:title" content="Workshop | GetPaid Workshop" />
         <meta property="og:type" content="website" />
       </Head>
-      <div className="min-h-screen bg-white">
-        <RegisterWorkshopModal
-          isOpen={registerOpen}
-          onClose={() => setRegisterOpen(false)}
-          onSubmit={handleRegisterModalSubmit}
-        />
-        <section className="relative flex items-center pt-6 pb-8 sm:pt-8 sm:pb-10 px-4 sm:px-6 lg:px-8 overflow-hidden bg-blue-600 border-b-2 border-black">
-          <div className="max-w-3xl mx-auto text-center relative z-10">
-            <motion.h1
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              className="text-3xl sm:text-4xl md:text-5xl font-bold text-white leading-tight tracking-tight"
-            >
-              Launch Your Marketing Journey
-            </motion.h1>
-            <motion.p
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-              className="mt-5 sm:mt-6 text-lg sm:text-xl text-white/95 leading-relaxed"
-            >
-              Are you ready to take the first step toward building your own marketing agency? Join us as we explore proven strategies and valuable insights that can set you on the path to success. Discover how you can attract clients and generate income through effective online marketing.
-            </motion.p>
-          </div>
-        </section>
+      <div className="min-h-screen bg-gradient-to-b from-zinc-700 via-zinc-900 to-black">
+        {/* Webinar player — theater-style frame */}
+        <section className="relative py-10 sm:py-16 px-4 sm:px-6 lg:px-10 border-b border-amber-950/40 overflow-hidden">
+          {/* Atmospheric backdrop */}
+          <div
+            className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[#3d3530] via-[#1c1917] to-[#0a0908]"
+            aria-hidden
+          />
+          <div
+            className="pointer-events-none absolute inset-0 opacity-[0.35]"
+            style={{
+              backgroundImage: `
+                linear-gradient(90deg, rgba(212, 175, 55, 0.045) 1px, transparent 1px),
+                linear-gradient(rgba(212, 175, 55, 0.045) 1px, transparent 1px),
+                linear-gradient(135deg, transparent 40%, rgba(0,0,0,0.25) 100%)
+              `,
+              backgroundSize: '28px 28px, 28px 28px, auto',
+            }}
+            aria-hidden
+          />
+          <div
+            className="pointer-events-none absolute inset-0 opacity-[0.12]"
+            style={{
+              backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`,
+            }}
+            aria-hidden
+          />
+          <div
+            className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_45%,transparent_20%,rgba(0,0,0,0.55)_75%,rgba(0,0,0,0.85)_100%)]"
+            aria-hidden
+          />
+          {/* Side curtain strips */}
+          <div
+            className="pointer-events-none absolute inset-y-0 left-0 w-[min(18%,9rem)] bg-gradient-to-r from-black/55 via-black/20 to-transparent"
+            aria-hidden
+          />
+          <div
+            className="pointer-events-none absolute inset-y-0 right-0 w-[min(18%,9rem)] bg-gradient-to-l from-black/55 via-black/20 to-transparent"
+            aria-hidden
+          />
 
-        {/* Webinar player */}
-        <section className="py-12 sm:py-16 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-slate-100 via-slate-50 to-white border-b border-slate-200/80">
-          <div className="max-w-6xl mx-auto">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-slate-900 text-center mb-3 sm:mb-4 tracking-tight">
-              Workshop webinar
+          <div className="relative z-10 max-w-6xl mx-auto">
+            <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-white text-center mb-8 sm:mb-10 tracking-tight px-2 drop-shadow-[0_2px_12px_rgba(0,0,0,0.6)]">
+              Workshop in Progress Do Not Close the window.
             </h2>
-            <p className="text-center text-slate-600 max-w-xl mx-auto mb-8 sm:mb-10 text-sm sm:text-base leading-relaxed">
-              {mp4Url
-                ? 'The “Schedule a Call” option appears after 38 minutes of playback.'
-                : '“Schedule a Call” unlocks 38 minutes after you open this page.'}
-            </p>
 
-            <div className="mx-auto max-w-5xl rounded-2xl sm:rounded-3xl p-1 sm:p-1.5 bg-gradient-to-br from-slate-300/90 via-white to-blue-200/70 shadow-[0_25px_60px_-15px_rgba(15,23,42,0.35)] ring-1 ring-slate-900/10">
-              <div className="relative overflow-hidden rounded-[0.875rem] sm:rounded-[1.2rem] bg-slate-950 shadow-inner ring-2 ring-black/20 aspect-video w-full max-h-[80vh]">
-                {mp4Url ? (
-                  <video
-                    src={mp4Url}
-                    className="w-full h-full object-contain bg-black"
-                    controls
-                    playsInline
-                    onTimeUpdate={handleVideoTimeUpdate}
-                  />
-                ) : (
-                  <iframe
-                    title="Workshop webinar video"
-                    src={WEBINAR_DRIVE_EMBED}
-                    className="absolute inset-0 h-full w-full border-0"
-                    allow="autoplay; fullscreen; encrypted-media; picture-in-picture"
-                    allowFullScreen
-                  />
-                )}
+            <div className="relative mx-auto max-w-5xl px-2 sm:px-0">
+              {/* Corner crosses + gold frame accents */}
+              <div className="pointer-events-none absolute -top-3 -left-2 sm:-left-4 text-amber-500/35" aria-hidden>
+                <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M20 4v32M4 20h32" stroke="currentColor" strokeWidth="1.5" />
+                </svg>
+              </div>
+              <div className="pointer-events-none absolute -top-3 -right-2 sm:-right-4 text-amber-500/35" aria-hidden>
+                <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M20 4v32M4 20h32" stroke="currentColor" strokeWidth="1.5" />
+                </svg>
+              </div>
+              <div className="pointer-events-none absolute -bottom-3 -left-2 sm:-left-4 text-amber-500/35" aria-hidden>
+                <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M20 4v32M4 20h32" stroke="currentColor" strokeWidth="1.5" />
+                </svg>
+              </div>
+              <div className="pointer-events-none absolute -bottom-3 -right-2 sm:-right-4 text-amber-500/35" aria-hidden>
+                <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M20 4v32M4 20h32" stroke="currentColor" strokeWidth="1.5" />
+                </svg>
+              </div>
+
+              <div className="relative border border-amber-900/40 bg-gradient-to-b from-stone-900/80 to-black p-[2px] shadow-[0_0_0_1px_rgba(0,0,0,0.5),0_25px_70px_-12px_rgba(0,0,0,0.85),inset_0_1px_0_rgba(212,175,55,0.12)]">
+                <div className="relative overflow-hidden bg-black aspect-video w-full max-h-[80vh]">
+                  {mp4Url ? (
+                    <video
+                      src={mp4Url}
+                      className="w-full h-full object-contain bg-black"
+                      controls
+                      controlsList="nodownload noplaybackrate"
+                      disablePictureInPicture
+                      playsInline
+                    />
+                  ) : (
+                    <iframe
+                      title="Workshop video"
+                      src={WEBINAR_DRIVE_EMBED}
+                      className="absolute inset-0 h-full w-full border-0"
+                      allow="autoplay; fullscreen; encrypted-media"
+                      allowFullScreen
+                      sandbox={DRIVE_IFRAME_SANDBOX}
+                    />
+                  )}
+                </div>
               </div>
             </div>
 
             <div className="mt-8 sm:mt-10 flex justify-center">
-              <button
-                type="button"
-                onClick={() => setRegisterOpen(true)}
-                className="inline-flex w-full max-w-md sm:w-auto items-center justify-center px-10 py-4 sm:px-12 sm:py-5 text-lg sm:text-xl font-bold text-slate-900 bg-yellow-400 hover:bg-yellow-300 rounded-2xl border-2 border-black shadow-lg transition-all focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:ring-offset-2 focus:ring-offset-white"
+              <Link
+                href="/contact"
+                className="inline-flex w-full max-w-md sm:w-auto items-center justify-center px-10 py-4 sm:px-14 sm:py-5 text-lg sm:text-xl font-bold text-slate-900 bg-amber-400 hover:bg-amber-300 rounded-none border-2 border-amber-950/50 shadow-[0_8px_30px_-6px_rgba(0,0,0,0.65)] transition-all focus:outline-none focus:ring-2 focus:ring-amber-400 focus:ring-offset-2 focus:ring-offset-stone-900"
               >
-                Enroll for free
-              </button>
-            </div>
-
-            <div className="mt-10 min-h-[5rem]" aria-live="polite">
-              <AnimatePresence>
-                {showScheduleCta && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 16 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: 8 }}
-                    transition={{ duration: 0.35 }}
-                    className="flex justify-center"
-                  >
-                    <Link
-                      href="/contact"
-                      className="inline-flex items-center justify-center px-10 py-5 sm:px-14 sm:py-6 text-lg sm:text-2xl font-bold text-slate-900 bg-yellow-400 hover:bg-yellow-300 rounded-2xl border-2 border-black shadow-lg transition-all focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:ring-offset-2"
-                    >
-                      Schedule a Call Now
-                    </Link>
-                  </motion.div>
-                )}
-              </AnimatePresence>
+                Schedule a Call Now
+              </Link>
             </div>
           </div>
         </section>
@@ -241,7 +213,7 @@ export default function WorkshopPage() {
           </div>
         </section>
 
-        <main className="py-12 sm:py-16 px-4 sm:px-6 lg:px-8">
+        <main className="py-12 sm:py-16 px-4 sm:px-6 lg:px-8 bg-zinc-100/95">
           <div className="max-w-2xl mx-auto">
             <motion.section
               id="workshop-signup"
