@@ -11,10 +11,11 @@ const WorkshopVideoPlayer = dynamic(() => import('../components/workshop/Worksho
   ),
 })
 
-const WORKSHOP_VIDEO_FILENAME = 'Software 8 april Webinar-esv2-50p-bg-10p-music-10p.mp4'
-
-/** Public folder asset — encode spaces for reliable URLs. */
-const WORKSHOP_VIDEO_SRC = `/${encodeURIComponent(WORKSHOP_VIDEO_FILENAME)}`
+/**
+ * Full URL to the workshop MP4 (CDN, S3, R2, etc.). Do not commit multi‑hundred‑MB files to GitHub.
+ * Example: https://cdn.example.com/webinar/workshop.mp4
+ */
+const WORKSHOP_VIDEO_SRC = (process.env.NEXT_PUBLIC_WORKSHOP_VIDEO_URL || '').trim()
 
 /** Opened when the viewer taps “Enroll Me Now!” (after the threshold below). */
 const WORKSHOP_ENROLL_URL = 'https://calendly.com/yspmediafunnel/15min'
@@ -105,11 +106,24 @@ export default function WorkshopPage() {
 
               <div className="relative border border-amber-900/40 bg-gradient-to-b from-stone-900/80 to-black p-[2px] shadow-[0_0_0_1px_rgba(0,0,0,0.5),0_25px_70px_-12px_rgba(0,0,0,0.85),inset_0_1px_0_rgba(212,175,55,0.12)]">
                 <div className="relative bg-black">
-                  <WorkshopVideoPlayer
-                    src={WORKSHOP_VIDEO_SRC}
-                    enrollHref={WORKSHOP_ENROLL_URL}
-                    enrollAfterSeconds={WORKSHOP_ENROLL_AFTER_SECONDS}
-                  />
+                  {WORKSHOP_VIDEO_SRC ? (
+                    <WorkshopVideoPlayer
+                      src={WORKSHOP_VIDEO_SRC}
+                      enrollHref={WORKSHOP_ENROLL_URL}
+                      enrollAfterSeconds={WORKSHOP_ENROLL_AFTER_SECONDS}
+                    />
+                  ) : (
+                    <div className="flex aspect-video w-full max-h-[80vh] flex-col items-center justify-center gap-3 bg-black px-6 text-center text-sm text-amber-100/90">
+                      <p className="max-w-md">
+                        No workshop video URL is configured. Set{' '}
+                        <code className="rounded bg-stone-800 px-1.5 py-0.5 text-amber-200/95">
+                          NEXT_PUBLIC_WORKSHOP_VIDEO_URL
+                        </code>{' '}
+                        in your environment to the full HTTPS link of your MP4 (for example on a CDN or object
+                        storage).
+                      </p>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
