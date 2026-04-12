@@ -20,8 +20,10 @@ export default function WorkshopVideoPlayer({
   enrollHref,
   enrollAfterSeconds = DEFAULT_ENROLL_AFTER_SECONDS,
 }) {
+  const rootRef = useRef(null)
   const videoRef = useRef(null)
   const [showEnroll, setShowEnroll] = useState(false)
+  const [videoMountKey, setVideoMountKey] = useState(0)
   const enrollShownRef = useRef(false)
 
   const openEnroll = useCallback(() => {
@@ -71,7 +73,7 @@ export default function WorkshopVideoPlayer({
     /** Same idea as `if (video.currentTime >= 2100 && !shown)` in your snippet. */
     const tryRevealEnroll = () => {
       if (enrollShownRef.current) return
-      const t = player.currentTime
+      const t = media.currentTime
       if (!Number.isFinite(t) || t < threshold) return
       enrollShownRef.current = true
       setShowEnroll(true)
@@ -92,11 +94,24 @@ export default function WorkshopVideoPlayer({
       media.removeEventListener('seeked', tryRevealEnroll)
       media.removeEventListener('seeking', tryRevealEnroll)
       player.destroy()
+
+      /*
+       * Plyr hard-destroy replaces its UI with a clone of the original <video>. React’s ref still
+       * points at the detached node, so timeupdate/polling never see the element the user actually
+       * plays. Remount <video> only when our root is still on the page (skip real page unmount).
+       */
+      queueMicrotask(() => {
+        if (!rootRef.current?.isConnected) return
+        const v = videoRef.current
+        if (v && !v.isConnected) {
+          setVideoMountKey((k) => k + 1)
+        }
+      })
     }
-  }, [src, enrollAfterSeconds])
+  }, [src, enrollAfterSeconds, videoMountKey])
 
   return (
-    <div className="flex flex-col items-stretch">
+    <div ref={rootRef} className="flex flex-col items-stretch">
       <div className="aspect-video w-full max-h-[80vh] bg-black">
         <div
           className="workshop-plyr h-full w-full [&_.plyr]:h-full [&_.plyr]:min-h-0 [&_.plyr__video-wrapper]:h-full [&_.plyr__video-wrapper]:max-h-[80vh] [&_video]:h-full [&_video]:max-h-[80vh] [&_video]:object-contain"
@@ -105,7 +120,13 @@ export default function WorkshopVideoPlayer({
             '--plyr-video-background': '#000000',
           }}
         >
-          <video ref={videoRef} className="w-full h-full object-contain bg-black" playsInline controls>
+          <video
+            key={videoMountKey}
+            ref={videoRef}
+            className="w-full h-full object-contain bg-black"
+            playsInline
+            controls
+          >
             <source src={src} type="video/mp4" />
           </video>
         </div>
