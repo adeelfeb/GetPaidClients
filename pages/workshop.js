@@ -194,10 +194,18 @@ export default function WorkshopPage() {
                       rel="noreferrer"
                       data-video-title={WORKSHOP_VIDEO_TITLE}
                       aria-hidden={!showEnrollButton}
-                      className={`inline-flex items-center justify-center rounded-md bg-amber-500 px-6 py-3 text-sm font-semibold text-black transition hover:bg-amber-400 ${
-                        showEnrollButton ? 'opacity-100' : 'pointer-events-none opacity-0'
+                      className={`group relative inline-flex items-center justify-center rounded-md px-6 py-3 text-sm font-semibold text-black transition-all duration-700 ease-out ${
+                        showEnrollButton
+                          ? 'translate-y-0 scale-100 opacity-100 bg-amber-400 shadow-[0_0_0_1px_rgba(251,191,36,0.35),0_0_24px_rgba(251,191,36,0.45)] hover:bg-amber-300 hover:shadow-[0_0_0_1px_rgba(251,191,36,0.55),0_0_32px_rgba(251,191,36,0.65)]'
+                          : 'pointer-events-none translate-y-3 scale-95 opacity-0 bg-amber-500'
                       }`}
                     >
+                      {showEnrollButton ? (
+                        <span
+                          className="pointer-events-none absolute -inset-1 rounded-md bg-amber-300/30 blur-md animate-pulse"
+                          aria-hidden
+                        />
+                      ) : null}
                       Schedule a Meeting
                     </a>
                   </div>
