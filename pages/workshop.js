@@ -1,15 +1,35 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import Head from 'next/head'
 import Script from 'next/script'
 import Footer from '../components/designndev/Footer'
 
 const WORKSHOP_ENROLL_URL = 'https://calendly.com/yspmediafunnel/15min'
-const WORKSHOP_ENROLL_AFTER_SECONDS = 35 * 60
+const WORKSHOP_ENROLL_AFTER_SECONDS = 40 * 60
 const WORKSHOP_VIDEO_TITLE = '14 april Software webinar -esv2-50p-bg-10p-music-10p'
+const WORKSHOP_VIMEO_SRC =
+  'https://player.vimeo.com/video/1182915549?h=0c4d7707fa&badge=0&autopause=0&player_id=0&app_id=58479'
 
 export default function WorkshopPage() {
   const [isPlayerApiReady, setIsPlayerApiReady] = useState(false)
   const [showEnrollButton, setShowEnrollButton] = useState(false)
+  const [playerUnavailable, setPlayerUnavailable] = useState(false)
+
+  const reattachIframeIfNeeded = useCallback(() => {
+    if (typeof document === 'undefined') return
+    const iframe = document.querySelector(`iframe[title="${WORKSHOP_VIDEO_TITLE}"]`)
+    if (!iframe) return
+
+    const currentSrc = iframe.getAttribute('src')
+    if (!currentSrc || !currentSrc.includes('player.vimeo.com/video/1182915549')) {
+      iframe.setAttribute('src', WORKSHOP_VIMEO_SRC)
+    }
+  }, [])
+
+  useEffect(() => {
+    if (typeof window !== 'undefined' && window.Vimeo) {
+      setIsPlayerApiReady(true)
+    }
+  }, [])
 
   useEffect(() => {
     if (!isPlayerApiReady || typeof window === 'undefined' || !window.Vimeo) return
@@ -29,21 +49,50 @@ export default function WorkshopPage() {
     player
       .getVideoTitle()
       .then((title) => {
-        if (!isMounted || title !== WORKSHOP_VIDEO_TITLE) return
+        if (!isMounted) return
+        if (title !== WORKSHOP_VIDEO_TITLE) {
+          setPlayerUnavailable(true)
+          return
+        }
 
+        setPlayerUnavailable(false)
         player.on('timeupdate', revealWhenEligible)
         player.on('seeked', revealWhenEligible)
         player.getCurrentTime().then((seconds) => revealWhenEligible({ seconds })).catch(() => {})
       })
-      .catch(() => {})
+      .catch(() => {
+        if (isMounted) {
+          setPlayerUnavailable(true)
+        }
+      })
 
     return () => {
       isMounted = false
       player.off('timeupdate', revealWhenEligible)
       player.off('seeked', revealWhenEligible)
-      player.destroy().catch(() => {})
     }
   }, [isPlayerApiReady])
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+
+    const handleRestore = () => {
+      reattachIframeIfNeeded()
+      if (window.Vimeo) {
+        setIsPlayerApiReady(true)
+      }
+    }
+
+    window.addEventListener('focus', handleRestore)
+    window.addEventListener('pageshow', handleRestore)
+    document.addEventListener('visibilitychange', handleRestore)
+
+    return () => {
+      window.removeEventListener('focus', handleRestore)
+      window.removeEventListener('pageshow', handleRestore)
+      document.removeEventListener('visibilitychange', handleRestore)
+    }
+  }, [reattachIframeIfNeeded])
 
   return (
     <>
@@ -130,7 +179,7 @@ export default function WorkshopPage() {
                   <div className="relative w-full aspect-video overflow-hidden">
                     <iframe
                       id="workshop-vimeo-player"
-                      src="https://player.vimeo.com/video/1182915549?h=0c4d7707fa&badge=0&autopause=0&player_id=0&app_id=58479"
+                      src={WORKSHOP_VIMEO_SRC}
                       frameBorder="0"
                       allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
                       referrerPolicy="strict-origin-when-cross-origin"
@@ -152,6 +201,11 @@ export default function WorkshopPage() {
                       Schedule a Meeting
                     </a>
                   </div>
+                  {playerUnavailable ? (
+                    <p className="px-4 pb-3 text-center text-xs text-amber-200/80">
+                      Video temporarily unavailable. Refresh the page if it does not recover after switching back.
+                    </p>
+                  ) : null}
                 </div>
               </div>
             </div>
@@ -164,6 +218,11 @@ export default function WorkshopPage() {
         src="https://player.vimeo.com/api/player.js"
         strategy="afterInteractive"
         onLoad={() => setIsPlayerApiReady(true)}
+        onReady={() => {
+          if (typeof window !== 'undefined' && window.Vimeo) {
+            setIsPlayerApiReady(true)
+          }
+        }}
       />
     </>
   )
