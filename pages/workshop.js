@@ -1,29 +1,50 @@
-import dynamic from 'next/dynamic'
+import { useEffect, useState } from 'react'
 import Head from 'next/head'
+import Script from 'next/script'
 import Footer from '../components/designndev/Footer'
 
-const WorkshopVideoPlayer = dynamic(() => import('../components/workshop/WorkshopVideoPlayer'), {
-  ssr: false,
-  loading: () => (
-    <div className="flex aspect-video w-full max-h-[80vh] items-center justify-center bg-black text-sm text-white/50">
-      Loading video player…
-    </div>
-  ),
-})
-
-/**
- * Full URL to the workshop MP4 (CDN, S3, R2, etc.). Do not commit multi‑hundred‑MB files to GitHub.
- * Example: https://cdn.example.com/webinar/workshop.mp4
- */
-const WORKSHOP_VIDEO_SRC = (process.env.NEXT_PUBLIC_WORKSHOP_VIDEO_URL || '').trim()
-
-/** Opened when the viewer taps “Enroll Me Now!” (after the threshold below). */
 const WORKSHOP_ENROLL_URL = 'https://calendly.com/yspmediafunnel/15min'
-
-/** Seconds of playback before the enroll button appears (35 minutes = 2100). */
 const WORKSHOP_ENROLL_AFTER_SECONDS = 35 * 60
+const WORKSHOP_VIDEO_TITLE = '14 april Software webinar -esv2-50p-bg-10p-music-10p'
 
 export default function WorkshopPage() {
+  const [isPlayerApiReady, setIsPlayerApiReady] = useState(false)
+  const [showEnrollButton, setShowEnrollButton] = useState(false)
+
+  useEffect(() => {
+    if (!isPlayerApiReady || typeof window === 'undefined' || !window.Vimeo) return
+
+    const iframe = document.querySelector(`iframe[title="${WORKSHOP_VIDEO_TITLE}"]`)
+    if (!iframe) return
+
+    const player = new window.Vimeo.Player(iframe)
+    const revealWhenEligible = ({ seconds }) => {
+      if (seconds >= WORKSHOP_ENROLL_AFTER_SECONDS) {
+        setShowEnrollButton(true)
+      }
+    }
+
+    let isMounted = true
+
+    player
+      .getVideoTitle()
+      .then((title) => {
+        if (!isMounted || title !== WORKSHOP_VIDEO_TITLE) return
+
+        player.on('timeupdate', revealWhenEligible)
+        player.on('seeked', revealWhenEligible)
+        player.getCurrentTime().then((seconds) => revealWhenEligible({ seconds })).catch(() => {})
+      })
+      .catch(() => {})
+
+    return () => {
+      isMounted = false
+      player.off('timeupdate', revealWhenEligible)
+      player.off('seeked', revealWhenEligible)
+      player.destroy().catch(() => {})
+    }
+  }, [isPlayerApiReady])
+
   return (
     <>
       <Head>
@@ -105,25 +126,32 @@ export default function WorkshopPage() {
               </div>
 
               <div className="relative border border-amber-900/40 bg-gradient-to-b from-stone-900/80 to-black p-[2px] shadow-[0_0_0_1px_rgba(0,0,0,0.5),0_25px_70px_-12px_rgba(0,0,0,0.85),inset_0_1px_0_rgba(212,175,55,0.12)]">
-                <div className="relative bg-black">
-                  {WORKSHOP_VIDEO_SRC ? (
-                    <WorkshopVideoPlayer
-                      src={WORKSHOP_VIDEO_SRC}
-                      enrollHref={WORKSHOP_ENROLL_URL}
-                      enrollAfterSeconds={WORKSHOP_ENROLL_AFTER_SECONDS}
+                <div className="relative bg-black p-2 sm:p-3">
+                  <div className="relative w-full aspect-video overflow-hidden">
+                    <iframe
+                      id="workshop-vimeo-player"
+                      src="https://player.vimeo.com/video/1182915549?h=0c4d7707fa&badge=0&autopause=0&player_id=0&app_id=58479"
+                      frameBorder="0"
+                      allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+                      referrerPolicy="strict-origin-when-cross-origin"
+                      style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
+                      title={WORKSHOP_VIDEO_TITLE}
                     />
-                  ) : (
-                    <div className="flex aspect-video w-full max-h-[80vh] flex-col items-center justify-center gap-3 bg-black px-6 text-center text-sm text-amber-100/90">
-                      <p className="max-w-md">
-                        No workshop video URL is configured. Set{' '}
-                        <code className="rounded bg-stone-800 px-1.5 py-0.5 text-amber-200/95">
-                          NEXT_PUBLIC_WORKSHOP_VIDEO_URL
-                        </code>{' '}
-                        in your environment to the full HTTPS link of your MP4 (for example on a CDN or object
-                        storage).
-                      </p>
-                    </div>
-                  )}
+                  </div>
+                  <div className="pt-4 pb-1 flex justify-center">
+                    <a
+                      href={WORKSHOP_ENROLL_URL}
+                      target="_blank"
+                      rel="noreferrer"
+                      data-video-title={WORKSHOP_VIDEO_TITLE}
+                      aria-hidden={!showEnrollButton}
+                      className={`inline-flex items-center justify-center rounded-md bg-amber-500 px-6 py-3 text-sm font-semibold text-black transition hover:bg-amber-400 ${
+                        showEnrollButton ? 'opacity-100' : 'pointer-events-none opacity-0'
+                      }`}
+                    >
+                      Schedule a Meeting
+                    </a>
+                  </div>
                 </div>
               </div>
             </div>
@@ -132,6 +160,11 @@ export default function WorkshopPage() {
 
         <Footer />
       </div>
+      <Script
+        src="https://player.vimeo.com/api/player.js"
+        strategy="afterInteractive"
+        onLoad={() => setIsPlayerApiReady(true)}
+      />
     </>
   )
 }
