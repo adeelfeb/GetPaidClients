@@ -104,6 +104,12 @@ export default function WorkshopPage() {
         />
         <meta property="og:title" content="Workshop | GetPaid Workshop" />
         <meta property="og:type" content="website" />
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "gtag('event', 'conversion', {'send_to': 'AW-337880956/3ygLCIf_8bAYEPzOjqEB'});",
+          }}
+        />
       </Head>
       <div className="min-h-screen bg-gradient-to-b from-zinc-700 via-zinc-900 to-black">
         {/* Webinar player — theater-style frame */}
@@ -194,7 +200,7 @@ export default function WorkshopPage() {
                       rel="noreferrer"
                       data-video-title={WORKSHOP_VIDEO_TITLE}
                       aria-hidden={!showEnrollButton}
-                      className={`group relative inline-flex items-center justify-center rounded-md px-6 py-3 text-sm font-semibold text-black transition-all duration-700 ease-out ${
+                      className={`group relative inline-flex items-center justify-center rounded-md px-10 py-5 text-base sm:text-lg font-bold text-black transition-all duration-700 ease-out ${
                         showEnrollButton
                           ? 'translate-y-0 scale-100 opacity-100 bg-amber-400 shadow-[0_0_0_1px_rgba(251,191,36,0.35),0_0_24px_rgba(251,191,36,0.45)] hover:bg-amber-300 hover:shadow-[0_0_0_1px_rgba(251,191,36,0.55),0_0_32px_rgba(251,191,36,0.65)]'
                           : 'pointer-events-none translate-y-3 scale-95 opacity-0 bg-amber-500'

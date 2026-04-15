@@ -24,12 +24,6 @@ export default function Footer({ variant = 'default', onEnrollClick }) {
             </div>
             {isLanding ? (
               <div className="w-full sm:w-auto flex flex-col sm:flex-row items-center justify-center sm:justify-end gap-4">
-                <Link
-                  href="/workshop"
-                  className="text-sm font-medium text-slate-300 hover:text-white underline-offset-4 hover:underline transition-colors whitespace-nowrap"
-                >
-                  Workshop
-                </Link>
                 {typeof onEnrollClick === 'function' ? (
                   <button type="button" onClick={onEnrollClick} className={landingCtaClass}>
                     Enroll Me for the Workshop
