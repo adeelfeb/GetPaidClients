@@ -7,6 +7,7 @@ import { useRouter } from 'next/navigation'
 import { motion } from 'framer-motion'
 import Footer from '../components/designndev/Footer'
 import RegisterWorkshopModal from '../components/RegisterWorkshopModal'
+import { safeParseJsonResponse } from '../utils/safeJsonResponse'
 
 const fadeUp = { initial: { opacity: 0, y: 24 }, whileInView: { opacity: 1, y: 0 }, viewport: { once: true } }
 const stagger = (delay = 0) => ({ ...fadeUp, transition: { duration: 0.5, delay } })
@@ -42,7 +43,20 @@ export default function Home() {
 
   const openRegister = useCallback(() => setRegisterOpen(true), [])
 
-  const handleRegisterSubmit = useCallback(() => {
+  const handleRegisterSubmit = useCallback(async (formData) => {
+    const response = await fetch('/api/workshop', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(formData),
+    })
+
+    const data = await safeParseJsonResponse(response)
+    if (!response.ok) {
+      throw new Error(data.message || 'Failed to submit workshop registration.')
+    }
+
     setRegisterOpen(false)
     router.push(enrolHref)
   }, [router])
@@ -68,7 +82,11 @@ export default function Home() {
 
   return (
     <main className="min-h-screen bg-white">
-      <RegisterWorkshopModal isOpen={registerOpen} onClose={() => setRegisterOpen(false)} onSubmit={handleRegisterSubmit} />
+      <RegisterWorkshopModal
+        isOpen={registerOpen}
+        onClose={() => setRegisterOpen(false)}
+        onSubmit={handleRegisterSubmit}
+      />
 
       <section className="relative min-h-0 flex flex-col items-center pt-8 pb-12 sm:pt-10 sm:pb-16 px-6 sm:px-10 md:px-14 lg:px-20 xl:px-28 overflow-hidden bg-[#0f2d4a] border-b-2 border-black">
         <div className="w-full max-w-6xl xl:max-w-7xl mx-auto flex flex-col items-center text-center relative z-10">
