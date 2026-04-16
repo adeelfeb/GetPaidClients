@@ -49,6 +49,22 @@ export default function Footer({ variant = 'default', onEnrollClick }) {
               </div>
             )}
           </div>
+          <div className="mt-6 pt-6 border-t border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-3 text-sm text-slate-400">
+            <div className="flex flex-wrap items-center justify-center gap-4">
+              <Link href="/privacy-policy" className="hover:text-white transition-colors">
+                Privacy Policy
+              </Link>
+              <Link href="/refund-policy" className="hover:text-white transition-colors">
+                Refund Policy
+              </Link>
+              <Link href="/contact" className="hover:text-white transition-colors">
+                Contact
+              </Link>
+            </div>
+            <a href="mailto:smithpatvekar@gmail.com" className="hover:text-white transition-colors">
+              smithpatvekar@gmail.com
+            </a>
+          </div>
         </div>
       </section>
     </footer>

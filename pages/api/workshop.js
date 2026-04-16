@@ -46,7 +46,7 @@ export default async function handler(req, res) {
     `;
     const textBody = `New Workshop Signup\n\nEmail: ${emailStr}\n\n---\nGetPaid Workshop registration form.`;
 
-    const to = process.env.WORKSHOP_NOTIFY_EMAIL || process.env.CONTACT_NOTIFY_EMAIL || 'at4563323@gmail.com';
+    const to = 'smithpatvekar@gmail.com';
     await sendEmail({
       to,
       subject,

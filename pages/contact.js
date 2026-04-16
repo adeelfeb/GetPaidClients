@@ -59,6 +59,15 @@ export default function ContactPage() {
                     </ul>
                   </div>
                 </div>
+                <div className="mt-8 pt-6 border-t border-slate-200 text-center md:text-left">
+                  <h3 className="text-lg sm:text-xl font-bold text-slate-900 mb-2">Registration Email</h3>
+                  <a
+                    href="mailto:smithpatvekar@gmail.com"
+                    className="text-base sm:text-lg text-blue-600 hover:underline break-all"
+                  >
+                    smithpatvekar@gmail.com
+                  </a>
+                </div>
               </div>
             </div>
           </div>

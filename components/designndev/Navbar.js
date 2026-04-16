@@ -62,6 +62,7 @@ export default function Navbar() {
   const navItems = [
     { href: '/', label: 'Home' },
     { href: '/privacy-policy', label: 'Privacy Policy' },
+    { href: '/refund-policy', label: 'Refund Policy' },
     { href: '/contact', label: 'Contact' },
   ]
 

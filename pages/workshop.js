@@ -104,12 +104,6 @@ export default function WorkshopPage() {
         />
         <meta property="og:title" content="Workshop | GetPaid Workshop" />
         <meta property="og:type" content="website" />
-        <script
-          dangerouslySetInnerHTML={{
-            __html:
-              "gtag('event', 'conversion', {'send_to': 'AW-337880956/3ygLCIf_8bAYEPzOjqEB'});",
-          }}
-        />
       </Head>
       <div className="min-h-screen bg-gradient-to-b from-zinc-700 via-zinc-900 to-black">
         {/* Webinar player — theater-style frame */}
@@ -228,6 +222,20 @@ export default function WorkshopPage() {
 
         <Footer />
       </div>
+      <Script
+        id="google-ads-workshop-conversion"
+        strategy="afterInteractive"
+      >
+        {`
+          if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
+            window.gtag('event', 'conversion', { send_to: 'AW-337880956/3ygLCIf_8bAYEPzOjqEB' });
+          }
+          if (typeof window !== 'undefined' && typeof window.fbq === 'function') {
+            window.fbq('track', 'Lead');
+            window.fbq('trackCustom', 'WorkshopPageView');
+          }
+        `}
+      </Script>
       <Script
         src="https://player.vimeo.com/api/player.js"
         strategy="afterInteractive"

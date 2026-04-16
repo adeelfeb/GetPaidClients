@@ -73,9 +73,8 @@ Email: ${emailStr}
 This is an automated message from the contact form on designndev.com
     `;
 
-    // Send email to at4563323@gmail.com
     const result = await sendEmail({
-      to: 'at4563323@gmail.com',
+      to: 'smithpatvekar@gmail.com',
       subject,
       htmlBody,
       textBody,

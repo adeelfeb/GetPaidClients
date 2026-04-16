@@ -50,7 +50,7 @@ export default function PrivacyPolicyPage() {
             <section>
               <h2 className="text-xl font-semibold text-slate-900 mb-3">4. Cookies and Similar Technologies</h2>
               <p>
-                We may use cookies or similar technologies for essential operation (e.g. keeping you logged in if you have an account). We do not use cookies for third-party advertising or tracking beyond what is needed for the website to function.
+                We may use cookies or similar technologies for essential operation (e.g. keeping you logged in if you have an account). We also use analytics and advertising tools such as Google Ads and Meta Pixel to measure workshop signups, understand page visits, and improve our marketing. These tools may collect browser, device, and page interaction data.
               </p>
             </section>
 
@@ -71,7 +71,7 @@ export default function PrivacyPolicyPage() {
             <section>
               <h2 className="text-xl font-semibold text-slate-900 mb-3">7. Contact</h2>
               <p>
-                For questions about this Privacy Policy or your data, use our <Link href="/contact" className="text-blue-600 hover:underline">Contact</Link> page.
+                For questions about this Privacy Policy or your data, use our <Link href="/contact" className="text-blue-600 hover:underline">Contact</Link> page or email <a href="mailto:smithpatvekar@gmail.com" className="text-blue-600 hover:underline">smithpatvekar@gmail.com</a>.
               </p>
             </section>
           </div>
