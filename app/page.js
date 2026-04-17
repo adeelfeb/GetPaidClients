@@ -365,8 +365,8 @@ export default function Home() {
             <motion.div {...stagger(0)} className="order-2 lg:order-1 text-center lg:text-left">
               <span className="inline-block text-blue-600 font-semibold text-sm uppercase tracking-widest mb-3">Foundation #3</span>
               <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-slate-900 leading-tight">
-                The secret strategy I use to Build successful ads{' '}
-                <span className="text-blue-600">within 60 seconds to Get 100 customers Per day</span> with the Same AI Software
+                How I turn one AI stack into{' '}
+                <span className="text-blue-600">recurring client work</span> — offers, fulfillment, and reporting without hiring a big team
               </h2>
               <p className="mt-6 text-slate-600 leading-relaxed text-base sm:text-lg">
                 Join our workshop to discover essential tips and strategies for launching your own marketing agency. You&apos;ll gain insights into finding clients, maximizing income, and leveraging AI solutions to streamline your business.
