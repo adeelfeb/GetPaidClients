@@ -6,24 +6,24 @@ export default function RefundPolicyPage() {
   return (
     <>
       <Head>
-        <title>Refund Policy | NextSaaS</title>
+        <title>Refund Policy | GetPaid Clients</title>
         <meta
           name="description"
-          content="Next SaaS money back and refund policy."
+          content="GetPaid Clients money back and refund policy."
         />
-        <meta name="keywords" content="refund policy, NextSaaS, money back guarantee" />
-        <meta property="og:title" content="Refund Policy | NextSaaS" />
+        <meta name="keywords" content="refund policy, GetPaid Clients, money back guarantee" />
+        <meta property="og:title" content="Refund Policy | GetPaid Clients" />
         <meta property="og:type" content="website" />
       </Head>
       <div className="min-h-screen bg-slate-50">
         <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 pb-16 sm:pt-12 sm:pb-20 md:py-16">
-          <h1 className="text-3xl md:text-4xl font-bold text-slate-900 mb-2">Next SaaS Money Back &amp; Refund Policy</h1>
+          <h1 className="text-3xl md:text-4xl font-bold text-slate-900 mb-2">GetPaid Clients Money Back &amp; Refund Policy</h1>
           <p className="text-slate-500 text-sm mb-10">Effective Date: 01/11/2025</p>
 
           <div className="prose prose-slate max-w-none space-y-10 text-slate-700">
             <section>
               <p>
-                At Next SaaS, we aim to ensure our clients get real business results while protecting our company
+                At GetPaid Clients, we aim to ensure our clients get real business results while protecting our company
                 from misuse. Please read this policy carefully — by making any purchase, you agree to all terms below.
               </p>
             </section>
@@ -31,7 +31,7 @@ export default function RefundPolicyPage() {
             <section>
               <h2 className="text-xl font-semibold text-slate-900 mb-3">Sales guarantee</h2>
               <p>
-                Next SaaS offers a &quot;Sales Guarantee&quot; only to clients who actively use the system and deliver a minimum
+                GetPaid Clients offers a &quot;Sales Guarantee&quot; only to clients who actively use the system and deliver a minimum
                 of 30 qualified appointments per month.
               </p>
               <p>
@@ -39,7 +39,7 @@ export default function RefundPolicyPage() {
                 services and have the ability and intent to purchase.
               </p>
               <p>
-                The client must use Next SaaS tools correctly — including the CRM, automation, and ad setup system —
+                The client must use GetPaid Clients tools correctly — including the CRM, automation, and ad setup system —
                 and must not pause, delete, or misuse the account during the guarantee period.
               </p>
               <p>
@@ -52,7 +52,7 @@ export default function RefundPolicyPage() {
                 year there is no sales or money back guarantee.
               </p>
               <p>
-                If the client meets the above conditions and still fails to close sales, Next SaaS will offer a 100%
+                If the client meets the above conditions and still fails to close sales, GetPaid Clients will offer a 100%
                 money-back guarantee.
               </p>
               <p>
@@ -64,11 +64,11 @@ export default function RefundPolicyPage() {
             <section>
               <h2 className="text-xl font-semibold text-slate-900 mb-3">Yearly Plan Policy</h2>
               <p>
-                Yearly plan users get full access to all Next SaaS tools and features for 12 months from the date of
+                Yearly plan users get full access to all GetPaid Clients tools and features for 12 months from the date of
                 activation.
               </p>
               <p>
-                If for any reason Next SaaS discontinues operations, refunds will be issued only for the remaining
+                If for any reason GetPaid Clients discontinues operations, refunds will be issued only for the remaining
                 unused months of the yearly subscription.
               </p>
               <p>
@@ -89,10 +89,10 @@ export default function RefundPolicyPage() {
             <section>
               <h2 className="text-xl font-semibold text-slate-900 mb-3">Lifetime Plan Policy</h2>
               <p>
-                The Lifetime Deal remains valid as long as the Next SaaS platform is active and operational.
+                The Lifetime Deal remains valid as long as the GetPaid Clients platform is active and operational.
               </p>
               <p>
-                If Next SaaS, for any reason, discontinues its services or shuts down, the Lifetime Deal will
+                If GetPaid Clients, for any reason, discontinues its services or shuts down, the Lifetime Deal will
                 automatically expire, and no refund or compensation will be issued.
               </p>
               <p>
@@ -104,7 +104,7 @@ export default function RefundPolicyPage() {
                 eligible for refunds under any circumstances.
               </p>
               <p>All Lifetime Deals are non-transferable and non-refundable once activated except Sales policy.</p>
-              <p>Next SaaS reserves the right to modify, amend, or discontinue this policy without prior notice.</p>
+              <p>GetPaid Clients reserves the right to modify, amend, or discontinue this policy without prior notice.</p>
             </section>
 
             <section>

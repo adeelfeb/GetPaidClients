@@ -6,24 +6,24 @@ export default function PrivacyPolicyPage() {
   return (
     <>
       <Head>
-        <title>Privacy Policy | NextSaaS</title>
+        <title>Privacy Policy | GetPaid Clients</title>
         <meta
           name="description"
-          content="NextSaaS privacy policy."
+          content="GetPaid Clients privacy policy."
         />
-        <meta name="keywords" content="privacy policy, NextSaaS, data protection" />
-        <meta property="og:title" content="Privacy Policy | NextSaaS" />
+        <meta name="keywords" content="privacy policy, GetPaid Clients, data protection" />
+        <meta property="og:title" content="Privacy Policy | GetPaid Clients" />
         <meta property="og:type" content="website" />
       </Head>
       <div className="min-h-screen bg-slate-50">
         <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 pb-16 sm:pt-12 sm:pb-20 md:py-16">
-          <h1 className="text-3xl md:text-4xl font-bold text-slate-900 mb-2">NextSaaS Privacy Policy</h1>
+          <h1 className="text-3xl md:text-4xl font-bold text-slate-900 mb-2">GetPaid Clients Privacy Policy</h1>
           <p className="text-slate-500 text-sm mb-10">Effective Date: 01/01/2025</p>
 
           <div className="prose prose-slate max-w-none space-y-10 text-slate-700">
             <section>
               <p>
-                Welcome to NextSaaS! Your privacy is important to us. This Privacy Policy explains how we collect,
+                Welcome to GetPaid Clients! Your privacy is important to us. This Privacy Policy explains how we collect,
                 use, and protect your personal information when you use our website, software, or services. By using
                 our platform, you agree to the terms of this policy.
               </p>
@@ -86,7 +86,7 @@ export default function PrivacyPolicyPage() {
 
             <section>
               <h2 className="text-xl font-semibold text-slate-900 mb-3">4. What We Don&apos;t Do</h2>
-              <p>At NextSaaS, we respect your boundaries:</p>
+              <p>At GetPaid Clients, we respect your boundaries:</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li>We never sell or rent your personal data to third parties</li>
                 <li>We don&apos;t access your clients&apos; data unless required for technical support</li>
@@ -137,7 +137,7 @@ export default function PrivacyPolicyPage() {
             <section>
               <h2 className="text-xl font-semibold text-slate-900 mb-3">8. International Users</h2>
               <p>
-                If you&apos;re accessing NextSaaS from outside India, please note that your information will be processed and
+                If you&apos;re accessing GetPaid Clients from outside India, please note that your information will be processed and
                 stored in accordance with Indian laws. By using our platform, you consent to this transfer.
               </p>
             </section>
