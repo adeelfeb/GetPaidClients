@@ -94,6 +94,37 @@ export default function WorkshopPage() {
     }
   }, [reattachIframeIfNeeded])
 
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+
+    const conversionGuardKey = 'workshop_conversion_aw_337880956_3ygLCIf_8bAYEPzOjqEB'
+    const leadGuardKey = 'workshop_fb_lead_527572000359726'
+
+    const hasSentConversion =
+      window.__workshopTrackingSent?.[conversionGuardKey] ||
+      window.sessionStorage?.getItem(conversionGuardKey) === '1'
+    const hasSentLead =
+      window.__workshopTrackingSent?.[leadGuardKey] ||
+      window.sessionStorage?.getItem(leadGuardKey) === '1'
+
+    if (!window.__workshopTrackingSent) {
+      window.__workshopTrackingSent = {}
+    }
+
+    if (!hasSentConversion && typeof window.gtag === 'function') {
+      window.gtag('event', 'conversion', { send_to: 'AW-337880956/3ygLCIf_8bAYEPzOjqEB' })
+      window.__workshopTrackingSent[conversionGuardKey] = true
+      window.sessionStorage?.setItem(conversionGuardKey, '1')
+    }
+
+    if (!hasSentLead && typeof window.fbq === 'function') {
+      window.fbq('track', 'Lead')
+      window.fbq('trackCustom', 'WorkshopPageView')
+      window.__workshopTrackingSent[leadGuardKey] = true
+      window.sessionStorage?.setItem(leadGuardKey, '1')
+    }
+  }, [])
+
   return (
     <>
       <Head>
@@ -222,20 +253,6 @@ export default function WorkshopPage() {
 
         <Footer />
       </div>
-      <Script
-        id="google-ads-workshop-conversion"
-        strategy="afterInteractive"
-      >
-        {`
-          if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
-            window.gtag('event', 'conversion', { send_to: 'AW-337880956/3ygLCIf_8bAYEPzOjqEB' });
-          }
-          if (typeof window !== 'undefined' && typeof window.fbq === 'function') {
-            window.fbq('track', 'Lead');
-            window.fbq('trackCustom', 'WorkshopPageView');
-          }
-        `}
-      </Script>
       <Script
         src="https://player.vimeo.com/api/player.js"
         strategy="afterInteractive"
