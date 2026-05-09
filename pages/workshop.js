@@ -131,7 +131,7 @@ export default function WorkshopPage() {
         <title>Workshop | GetPaid Workshop</title>
         <meta
           name="description"
-          content="Join our free workshop to learn how to start an AI software reselling business and charge $1000 per client."
+          content="Join our free workshop to learn how to scale a global service business with high-ticket client strategies and recurring revenue systems."
         />
         <meta property="og:title" content="Workshop | GetPaid Workshop" />
         <meta property="og:type" content="website" />

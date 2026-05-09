@@ -123,7 +123,7 @@ export default function Home() {
             transition={{ duration: 0.55, delay: 0.08 }}
             className="mt-3 sm:mt-4 w-full max-w-5xl mx-auto px-2 sm:px-4 text-xl sm:text-2xl md:text-3xl lg:text-4xl font-semibold text-[#fcd34d] text-center leading-snug"
           >
-            Charge $1,000+ Per Client While Keeping 100% of the Profits
+            Learn to Scale a Global Service Business with High-Ticket Client Strategies. Discover how to build and retain recurring revenue in international markets.
           </motion.p>
           <motion.p
             initial={{ opacity: 0, y: 14 }}
@@ -131,7 +131,7 @@ export default function Home() {
             transition={{ duration: 0.55, delay: 0.12 }}
             className="mt-3 sm:mt-4 w-full max-w-5xl xl:max-w-6xl mx-auto px-2 sm:px-4 text-base sm:text-lg md:text-xl text-white/90 leading-relaxed"
           >
-            No fluff — just the same systems we use to land international clients and scale with AI automation, funnels, and recurring offers.
+            How to start an AI software reselling business from scratch within the next 30 days from the comfort of your home — using the same systems we use to land international clients and build recurring offers.
           </motion.p>
           <motion.div
             initial={{ opacity: 0, y: 16 }}
@@ -162,7 +162,7 @@ export default function Home() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="mt-3 sm:mt-4 w-full max-w-5xl xl:max-w-6xl mx-auto px-2 sm:px-4 text-base sm:text-lg md:text-xl text-white/95 leading-relaxed text-center"
           >
-            <i>I will reveal the secrets on how my agency does $200,000/yr in USA</i>
+            <i>I will break down the exact process we use to win international clients and build recurring revenue — step by step.</i>
           </motion.p>
           <motion.div
             initial={{ opacity: 0, y: 16 }}
@@ -181,10 +181,10 @@ export default function Home() {
         <div className="max-w-4xl mx-auto rounded-2xl py-16 sm:py-20 px-6 sm:px-8 bg-[#e0eef9] border-2 border-[#1e4976]/20">
           <div className="text-center">
             <motion.h2 {...stagger(0)} className="text-xl sm:text-2xl md:text-3xl font-bold text-[#1e4976] text-center">
-              Charge $1000 per client & Keep 100% Profits to yourself...!
+              Build & retain recurring revenue in international markets.
             </motion.h2>
             <motion.p {...stagger(0.1)} className="mt-4 text-[#1e4976]/90 text-center max-w-2xl mx-auto text-base sm:text-lg">
-              Learn how to GetPaid Recurring Month on Month revenue, In US, UK & India too.
+              Learn the client acquisition + delivery systems to scale a global service business (US, UK, India and beyond).
             </motion.p>
             <motion.div {...stagger(0.2)} className="mt-8 flex flex-wrap justify-center gap-4 sm:gap-5">
               <button type="button" onClick={openRegister} className={ctaStripPrimary}>
@@ -217,21 +217,21 @@ export default function Home() {
             {[
               {
                 title: 'AI Voice Calling Agent',
-                price: 'You can Charge $200 Alone for this Feature',
+                price: 'Offer-based add‑on for service businesses',
                 description:
                   'Unlock the potential of artificial intelligence with our tailored software solutions. We streamline your processes, enhance productivity, and help you stay ahead in your industry. Experience seamless integration and support designed for your growth.',
                 cta: 'DISCOVER NOW',
               },
               {
                 title: 'CRM- Email Marketing',
-                price: 'You can Charge $297 for this',
+                price: 'Retention engine for recurring clients',
                 description:
                   'Join our comprehensive online courses designed for aspiring marketing agency owners. Learn at your own pace with practical examples and expert guidance. Equip yourself with the knowledge to boost your business and achieve your financial goals.',
                 cta: 'ENROLL TODAY',
               },
               {
                 title: 'AI Whatsapp Marketing',
-                price: 'Packages starting at $250 per month',
+                price: 'Messaging automation for lead follow‑up',
                 description:
                   "Our marketing consulting services deliver tailored strategies to grow your agency. Gain insights into market trends, and client acquisition techniques, and streamline your campaigns for success. Partner with us, and let's reach those milestones together.",
                 cta: 'SCHEDULE A CALL',

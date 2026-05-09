@@ -44,7 +44,7 @@ export default function ContactPage() {
                     <ul className="space-y-3 text-slate-600 text-sm sm:text-base">
                       <li>How to start & scale an AI software business in 30 days</li>
                       <li>No coding required—proven strategies that work</li>
-                      <li>Charge $1000 per client & keep 100% profits</li>
+                      <li>Build and retain recurring revenue in international markets</li>
                       <li>Workshop updates and exclusive insights</li>
                     </ul>
                   </div>

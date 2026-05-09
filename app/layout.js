@@ -14,7 +14,8 @@ const poppins = Poppins({
 
 export const metadata = {
   title: 'GetPaid Workshop | AI Software Reselling Business',
-  description: 'Learn how to start an AI software reselling business from scratch. Charge $1000 per client and keep 100% profits. Join our free workshop.',
+  description:
+    'Learn to scale a global service business with high-ticket client strategies. Discover how to build and retain recurring revenue in international markets.',
   keywords: 'AI reselling, marketing agency, workshop, GetPaid',
   icons: {
     icon: '/favicon.svg',

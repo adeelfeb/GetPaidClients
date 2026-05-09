@@ -21,7 +21,7 @@ export default function InformationPage() {
             <section>
               <h2 className="text-xl font-semibold text-slate-900 mb-3">About This Site</h2>
               <p>
-                GetPaid Workshop helps you start an AI software reselling business from scratch. We offer workshops, webinars, and resources on how to charge $1000 per client and keep 100% of the profits. The site includes a blog and contact options for support.
+                GetPaid Workshop helps you start an AI software reselling business from scratch. We offer workshops, webinars, and resources focused on building a global service business with high‑ticket client strategies and recurring revenue in international markets. The site includes a blog and contact options for support.
               </p>
             </section>
 
