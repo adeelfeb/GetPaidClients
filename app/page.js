@@ -115,24 +115,15 @@ export default function Home() {
           >
             <span className="block">How to Start an AI Software</span>
             <span className="block mt-1.5 sm:mt-2">Reselling Business From Scratch</span>
-            <span className="block mt-2 sm:mt-3 text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold text-white/95">— and</span>
+            <span className="block mt-3 sm:mt-4 max-w-5xl xl:max-w-6xl mx-auto">
+              <span className="block text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold leading-tight tracking-tight text-yellow-300">
+                Within the next 30 days &amp; from the comfort of your home
+              </span>
+              <span className="block mt-2 sm:mt-3 text-xl sm:text-2xl md:text-3xl lg:text-4xl font-medium leading-snug text-sky-100/95">
+                — using the same systems we use to land international clients and build recurring offers.
+              </span>
+            </span>
           </motion.h1>
-          <motion.p
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.55, delay: 0.08 }}
-            className="mt-3 sm:mt-4 w-full max-w-5xl mx-auto px-2 sm:px-4 text-xl sm:text-2xl md:text-3xl lg:text-4xl font-semibold text-[#fcd34d] text-center leading-snug"
-          >
-            Learn to Scale a Global Service Business with High-Ticket Client Strategies. Discover how to build and retain recurring revenue in international markets.
-          </motion.p>
-          <motion.p
-            initial={{ opacity: 0, y: 14 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.55, delay: 0.12 }}
-            className="mt-3 sm:mt-4 w-full max-w-5xl xl:max-w-6xl mx-auto px-2 sm:px-4 text-base sm:text-lg md:text-xl text-white/90 leading-relaxed"
-          >
-            How to start an AI software reselling business from scratch within the next 30 days from the comfort of your home — using the same systems we use to land international clients and build recurring offers.
-          </motion.p>
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}

@@ -15,7 +15,7 @@ const poppins = Poppins({
 export const metadata = {
   title: 'GetPaid Workshop | AI Software Reselling Business',
   description:
-    'Learn to scale a global service business with high-ticket client strategies. Discover how to build and retain recurring revenue in international markets.',
+    'How to start an AI software reselling business from scratch within the next 30 days & from the comfort of your home — using the same systems we use to land international clients and build recurring offers.',
   keywords: 'AI reselling, marketing agency, workshop, GetPaid',
   icons: {
     icon: '/favicon.svg',
@@ -23,7 +23,8 @@ export const metadata = {
   },
   openGraph: {
     title: 'GetPaid Workshop | AI Software Reselling Business',
-    description: 'Learn how to start an AI software reselling business. Join our free workshop.',
+    description:
+      'How to start an AI software reselling business from scratch within the next 30 days & from the comfort of your home — using the same systems we use to land international clients and build recurring offers.',
     siteName: 'GetPaid Workshop',
     type: 'website',
   },
