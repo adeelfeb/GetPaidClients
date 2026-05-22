@@ -42,7 +42,7 @@ export default function ContactPage() {
                   <div className="text-center md:text-left">
                     <h3 className="text-lg sm:text-xl font-bold text-slate-900 mb-4">What You Get</h3>
                     <ul className="space-y-3 text-slate-600 text-sm sm:text-base">
-                      <li>How to start & scale an AI software business in 30 days</li>
+                      <li>How to start and scale an AI software reselling business</li>
                       <li>No coding required—proven strategies that work</li>
                       <li>Build and retain recurring revenue in international markets</li>
                       <li>Workshop updates and exclusive insights</li>

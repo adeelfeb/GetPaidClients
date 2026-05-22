@@ -115,13 +115,8 @@ export default function Home() {
           >
             <span className="block">How to Start an AI Software</span>
             <span className="block mt-1.5 sm:mt-2">Reselling Business From Scratch</span>
-            <span className="block mt-3 sm:mt-4 max-w-5xl xl:max-w-6xl mx-auto">
-              <span className="block text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold leading-tight tracking-tight text-yellow-300">
-                Within the next 30 days &amp; from the comfort of your home
-              </span>
-              <span className="block mt-2 sm:mt-3 text-xl sm:text-2xl md:text-3xl lg:text-4xl font-medium leading-snug text-sky-100/95">
-                — using the same systems we use to land international clients and build recurring offers.
-              </span>
+            <span className="block mt-3 sm:mt-4 max-w-5xl xl:max-w-6xl mx-auto text-xl sm:text-2xl md:text-3xl lg:text-4xl font-medium leading-snug text-sky-100/95">
+              Using the same systems we use to land international clients and build recurring offers.
             </span>
           </motion.h1>
           <motion.div
@@ -195,7 +190,7 @@ export default function Home() {
             Empower Your Journey
           </motion.p>
           <motion.h2 {...stagger(0.05)} className="mt-2 text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-[#fcd34d] text-center">
-            Learn How to Build Successful Facebook & Google Ads To Get 100&apos;s Customers Per Day With AI Automation...
+            Learn How to Build Facebook &amp; Google Ads With AI Automation for Client Acquisition...
           </motion.h2>
           <motion.h3 {...stagger(0.1)} className="mt-2 text-lg sm:text-xl md:text-2xl font-semibold text-white/95 text-center">
             Become an Official Owner of An AI Software...
@@ -217,7 +212,7 @@ export default function Home() {
                 title: 'CRM- Email Marketing',
                 price: 'Retention engine for recurring clients',
                 description:
-                  'Join our comprehensive online courses designed for aspiring marketing agency owners. Learn at your own pace with practical examples and expert guidance. Equip yourself with the knowledge to boost your business and achieve your financial goals.',
+                  'Join our comprehensive online courses designed for aspiring marketing agency owners. Learn at your own pace with practical examples and expert guidance. Equip yourself with the knowledge to improve client retention and service delivery.',
                 cta: 'ENROLL TODAY',
               },
               {
@@ -306,16 +301,16 @@ export default function Home() {
             <motion.div {...stagger(0)} className="order-2 lg:order-1 text-center lg:text-left">
               <span className="inline-block text-blue-600 font-semibold text-sm uppercase tracking-widest mb-3">Foundation #1</span>
               <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-slate-900 leading-tight">
-                How do I find <span className="text-blue-600">International High-Paying</span> Clients from the comfort of my home.
+                How do I find <span className="text-blue-600">International High-Paying</span> Clients for a remote service business.
               </h2>
               <p className="mt-6 text-slate-600 leading-relaxed text-base sm:text-lg">
-                Join our workshop to discover essential tips and strategies for launching your own marketing agency. You&apos;ll gain insights into finding clients, maximizing income, and leveraging AI solutions to streamline your business.
+                Join our workshop to discover essential tips and strategies for launching your own marketing agency. You&apos;ll gain insights into finding clients, building recurring revenue, and leveraging AI solutions to streamline your business.
               </p>
             </motion.div>
             <motion.div {...stagger(0.1)} className="order-1 lg:order-2 relative aspect-video rounded-2xl overflow-hidden border-2 border-slate-200 shadow-xl bg-slate-100">
               <Image
                 src={FOUNDATION_IMAGES.internationalClients}
-                alt="Video call with remote team — finding international clients from home"
+                alt="Video call with remote team — finding international clients"
                 fill
                 className="object-cover"
                 sizes="(max-width: 1024px) 100vw, 50vw"
@@ -340,10 +335,10 @@ export default function Home() {
             <motion.div {...stagger(0.1)} className="text-center lg:text-left">
               <span className="inline-block text-blue-600 font-semibold text-sm uppercase tracking-widest mb-3">Foundation #2</span>
               <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-slate-900 leading-tight">
-                How to Sign your First client within, <span className="text-blue-600">24 Hours of watching this webinar</span>
+                How to structure outreach and sign your <span className="text-blue-600">first high-value client</span>
               </h2>
               <p className="mt-6 text-slate-600 leading-relaxed text-base sm:text-lg">
-                Join our workshop to discover essential tips and strategies for launching your own marketing agency. You&apos;ll gain insights into finding clients, maximizing income, and leveraging AI solutions to streamline your business.
+                Join our workshop to discover essential tips and strategies for launching your own marketing agency. You&apos;ll gain insights into finding clients, building recurring revenue, and leveraging AI solutions to streamline your business.
               </p>
             </motion.div>
           </div>
@@ -360,7 +355,7 @@ export default function Home() {
                 <span className="text-blue-600">recurring client work</span> — offers, fulfillment, and reporting without hiring a big team
               </h2>
               <p className="mt-6 text-slate-600 leading-relaxed text-base sm:text-lg">
-                Join our workshop to discover essential tips and strategies for launching your own marketing agency. You&apos;ll gain insights into finding clients, maximizing income, and leveraging AI solutions to streamline your business.
+                Join our workshop to discover essential tips and strategies for launching your own marketing agency. You&apos;ll gain insights into finding clients, building recurring revenue, and leveraging AI solutions to streamline your business.
               </p>
             </motion.div>
             <motion.div {...stagger(0.1)} className="order-1 lg:order-2 relative aspect-video rounded-2xl overflow-hidden border-2 border-slate-200 shadow-xl bg-slate-100">
