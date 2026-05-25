@@ -3,7 +3,7 @@ import Script from 'next/script'
 import '../styles/globals.css'
 
 const GOOGLE_ADS_ID = 'AW-337880956'
-const META_PIXEL_ID = '527572000359726'
+const META_PIXEL_ID = '1707671407083892'
 
 const poppins = Poppins({ 
   subsets: ['latin'],
@@ -42,7 +42,7 @@ export default function RootLayout({ children }) {
             height="1"
             width="1"
             style={{ display: 'none' }}
-            src="https://www.facebook.com/tr?id=527572000359726&ev=PageView&noscript=1"
+            src={`https://www.facebook.com/tr?id=${META_PIXEL_ID}&ev=PageView&noscript=1`}
             alt=""
           />
         </noscript>

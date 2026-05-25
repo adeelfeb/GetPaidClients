@@ -36,6 +36,7 @@ const ctaCard =
   'mt-6 inline-flex items-center justify-center px-6 py-3.5 sm:px-8 sm:py-4 text-base sm:text-lg font-bold text-slate-900 bg-yellow-400 hover:bg-yellow-300 border-2 border-black rounded-xl transition-colors w-full md:w-fit md:mx-0 mx-auto'
 
 const SESSION_AUTO_POPUP = 'gpc-workshop-register-auto'
+const FB_LEAD_GUARD_KEY = 'gpc_fb_lead_1707671407083892'
 
 export default function Home() {
   const router = useRouter()
@@ -55,6 +56,17 @@ export default function Home() {
     const data = await safeParseJsonResponse(response)
     if (!response.ok) {
       throw new Error(data.message || 'Failed to submit workshop registration.')
+    }
+
+    if (typeof window !== 'undefined' && typeof window.fbq === 'function') {
+      try {
+        if (window.sessionStorage?.getItem(FB_LEAD_GUARD_KEY) !== '1') {
+          window.fbq('track', 'Lead')
+          window.sessionStorage?.setItem(FB_LEAD_GUARD_KEY, '1')
+        }
+      } catch {
+        window.fbq('track', 'Lead')
+      }
     }
 
     setRegisterOpen(false)

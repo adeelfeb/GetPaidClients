@@ -19,7 +19,7 @@ export default function Document() {
             height="1"
             width="1"
             style={{ display: 'none' }}
-            src="https://www.facebook.com/tr?id=527572000359726&ev=PageView&noscript=1"
+            src="https://www.facebook.com/tr?id=1707671407083892&ev=PageView&noscript=1"
             alt=""
           />
         </noscript>
