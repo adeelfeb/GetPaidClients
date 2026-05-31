@@ -95,7 +95,7 @@ export default function ContactForm({ showHeading = true }) {
               aria-hidden
             />
           )}
-          <form onSubmit={handleSubmit} className="space-y-5 sm:space-y-6 relative">
+          <form name="contact" onSubmit={handleSubmit} className="space-y-5 sm:space-y-6 relative">
             {/* Name Field */}
             <div className="min-w-0">
               <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">

@@ -6,6 +6,7 @@ import Script from 'next/script';
 import { ToastProvider } from '../components/ToastProvider';
 import ErrorBoundary from '../components/ErrorBoundary';
 import RecaptchaPreloader from '../components/RecaptchaPreloader';
+import ExternalTrackingScript from '../components/ExternalTrackingScript';
 
 const GOOGLE_ADS_ID = 'AW-337880956';
 const META_PIXEL_ID = '1707671407083892';
@@ -49,6 +50,7 @@ export default function App({ Component, pageProps }) {
             fbq('track', 'PageView');
           `}
         </Script>
+        <ExternalTrackingScript />
         <RecaptchaPreloader />
         <Component {...pageProps} />
       </ToastProvider>

@@ -43,7 +43,7 @@ export default function RegisterWorkshopModal({ isOpen, onClose, onSubmit }) {
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} title="Register for The Workshop" size="md" showCloseButton>
-      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+      <form name="workshop-registration" onSubmit={handleSubmit} className="flex flex-col gap-4">
         <input
           type="text"
           name="website"

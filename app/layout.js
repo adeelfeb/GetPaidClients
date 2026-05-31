@@ -1,5 +1,6 @@
 import { Poppins } from 'next/font/google'
 import Script from 'next/script'
+import ExternalTrackingScript from '../components/ExternalTrackingScript'
 import '../styles/globals.css'
 
 const GOOGLE_ADS_ID = 'AW-337880956'
@@ -72,6 +73,7 @@ export default function RootLayout({ children }) {
             fbq('track', 'PageView');
           `}
         </Script>
+        <ExternalTrackingScript />
         {children}
       </body>
     </html>
