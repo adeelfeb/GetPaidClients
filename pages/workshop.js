@@ -5,9 +5,9 @@ import Footer from '../components/designndev/Footer'
 
 const WORKSHOP_ENROLL_URL = 'https://calendly.com/yspmediafunnel/15min'
 const WORKSHOP_ENROLL_AFTER_SECONDS = 40 * 60
-const WORKSHOP_VIDEO_TITLE = '19 May Software webinar Volume'
+const WORKSHOP_VIDEO_TITLE = '$ 97 SaaS Webianr'
 const WORKSHOP_VIMEO_SRC =
-  'https://player.vimeo.com/video/1193504829?h=6085dedaee&badge=0&autopause=0&player_id=0&app_id=58479'
+  'https://player.vimeo.com/video/1197304141?h=dcbf71b7cc&badge=0&autopause=0&player_id=0&app_id=58479'
 
 export default function WorkshopPage() {
   const [isPlayerApiReady, setIsPlayerApiReady] = useState(false)
@@ -20,7 +20,7 @@ export default function WorkshopPage() {
     if (!iframe) return
 
     const currentSrc = iframe.getAttribute('src')
-    if (!currentSrc || !currentSrc.includes('player.vimeo.com/video/1193504829')) {
+    if (!currentSrc || !currentSrc.includes('player.vimeo.com/video/1197304141')) {
       iframe.setAttribute('src', WORKSHOP_VIMEO_SRC)
     }
   }, [])
