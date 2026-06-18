@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from 'react'
 import Head from 'next/head'
 import Script from 'next/script'
 import Footer from '../components/designndev/Footer'
+import { sendOptInRetargetingConversion } from '../utils/tracking'
 
 const WORKSHOP_ENROLL_URL = 'https://calendly.com/yspmediafunnel/15min'
 const WORKSHOP_ENROLL_AFTER_SECONDS = 40 * 60
@@ -112,6 +113,10 @@ export default function WorkshopPage() {
       window.__workshopTrackingSent[conversionGuardKey] = true
       window.sessionStorage?.setItem(conversionGuardKey, '1')
     }
+  }, [])
+
+  useEffect(() => {
+    sendOptInRetargetingConversion()
   }, [])
 
   return (
