@@ -1,5 +1,5 @@
 // Health check endpoint for deployment
-// Access at: http://localhost:3000/api/test
+// Access at: http://localhost:8000/api/test
 
 import { applyCors } from '../../utils';
 

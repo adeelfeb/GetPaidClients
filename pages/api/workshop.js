@@ -2,6 +2,8 @@ import { sendEmail, sendEmailAsync } from '../../utils/email';
 import { jsonError, jsonSuccess } from '../../lib/response';
 import { applyCors } from '../../utils';
 import { logger } from '../../utils/logger';
+import connectDB from '../../lib/db';
+import WorkshopRegistration from '../../models/WorkshopRegistration';
 
 /**
  * Workshop signup endpoint.
@@ -51,6 +53,12 @@ export default async function handler(req, res) {
   }
 
   try {
+    const db = await connectDB();
+    if (!db.success) {
+      logger.error('Workshop signup database unavailable:', db.error?.message);
+      return jsonError(res, 503, 'Registration is temporarily unavailable. Please try again shortly.');
+    }
+
     const subject = 'New Workshop Signup';
     const submittedAt = new Date().toISOString();
     const htmlBody = `
@@ -78,6 +86,13 @@ Submitted At: ${submittedAt}
 
 Copy-friendly row:
 ${nameStr} | ${emailStr} | ${phoneStr} | ${submittedAt}`;
+
+    await WorkshopRegistration.create({
+      name: nameStr,
+      email: emailStr,
+      phone: phoneStr,
+      submittedAt,
+    });
 
     const to = 'smithpatvekar@gmail.com';
     // Notification delivery must not make a valid registration fail.

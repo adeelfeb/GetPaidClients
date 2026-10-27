@@ -10,7 +10,8 @@
     "start": "next start -H 0.0.0.0 -p 8000",
     "postinstall": "echo 'Dependencies installed successfully'",
     "vercel-build": "next build",
-    "workshop:split": "bash scripts/split-workshop-video.sh"
+    "workshop:split": "bash scripts/split-workshop-video.sh",
+    "workshop:results-password": "node scripts/create-workshop-results-password.js"
   },
   "dependencies": {
     "ag-grid-community": "^34.3.1",
