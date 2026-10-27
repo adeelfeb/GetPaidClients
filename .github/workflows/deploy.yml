@@ -11,30 +11,63 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
-
       - name: Setup SSH
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.DROPLET_SSH_KEY }}
+          DROPLET_HOST: ${{ secrets.DROPLET_HOST }}
         run: |
+          set -euo pipefail
           mkdir -p ~/.ssh
-          echo "${{ secrets.DROPLET_SSH_KEY }}" > ~/.ssh/id_rsa
+          printf '%s\n' "$SSH_PRIVATE_KEY" | tr -d '\r' > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan -H ${{ secrets.DROPLET_HOST }} >> ~/.ssh/known_hosts
+          test -s ~/.ssh/id_rsa
+          ssh-keygen -y -f ~/.ssh/id_rsa > /dev/null
+          ssh-keyscan -H "$DROPLET_HOST" >> ~/.ssh/known_hosts
 
-      - name: Deploy
+      - name: Deploy and verify
+        env:
+          DROPLET_HOST: ${{ secrets.DROPLET_HOST }}
         run: |
-          ssh -i ~/.ssh/id_rsa root@${{ secrets.DROPLET_HOST }} << 'ENDSSH'
-          set -e
-          cd /root/GetPaidClients
-          git config --global --add safe.directory /root/GetPaidClients
-          echo "🔄 Pulling latest code..."
-          git fetch origin main
+          set -euo pipefail
+          ssh -i ~/.ssh/id_rsa -o IdentitiesOnly=yes root@"$DROPLET_HOST" 'bash -s' <<'ENDSSH'
+          set -euo pipefail
+          PROJECT_DIR=/root/GetPaidClients
+          APP_NAME=getpaidclients
+          APP_PORT=8000
+
+          cd "$PROJECT_DIR"
+          git config --global --add safe.directory "$PROJECT_DIR"
+          echo "Updating $PROJECT_DIR..."
+          git fetch --prune origin main
           git reset --hard origin/main
-          echo "📦 Installing dependencies..."
-          npm install --production=false
-          echo "🏗 Building application..."
+
+          echo "Installing locked dependencies on the droplet..."
+          npm ci
+          echo "Building on the droplet..."
           npm run build
-          echo "🚀 Starting/restarting PM2 process..."
-          pm2 restart getpaidclients || pm2 start npm --name "getpaidclients" -- start -- -p 8000
+
+          echo "Reloading PM2 process $APP_NAME..."
+          if pm2 describe "$APP_NAME" >/dev/null 2>&1; then
+            pm2 restart "$APP_NAME" --update-env
+          else
+            pm2 start npm --name "$APP_NAME" -- start -- -p "$APP_PORT"
+          fi
           pm2 save
-          echo "✅ Deployment completed!"
+
+          echo "Checking local application health..."
+          for attempt in 1 2 3 4 5; do
+            if curl --fail --silent --show-error --max-time 10 "http://127.0.0.1:${APP_PORT}/api/test" >/dev/null; then
+              echo "Deployment completed and the app is responding."
+              exit 0
+            fi
+            sleep 2
+          done
+
+          echo "The app did not respond after deployment. Recent PM2 logs:"
+          pm2 logs "$APP_NAME" --lines 80 --nostream || true
+          exit 1
           ENDSSH
+
+      - name: Remove SSH key
+        if: always()
+        run: rm -f ~/.ssh/id_rsa

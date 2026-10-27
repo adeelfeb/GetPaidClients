@@ -1,10 +1,10 @@
 module.exports = {
   apps: [{
-    name: 'GetPaidClients',
+    name: 'getpaidclients',
     script: './node_modules/next/dist/bin/next',
-    args: 'start -p 3000',
+    args: 'start -p 8000',
     node_args: '--max-old-space-size=1024',
-    cwd: '/GetPaidClients',
+    cwd: '/root/GetPaidClients',
     instances: 1,
     exec_mode: 'fork',
     autorestart: true,
