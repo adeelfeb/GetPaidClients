@@ -1,4 +1,4 @@
-import { sendEmail } from '../../utils/email';
+import { sendEmail, sendEmailAsync } from '../../utils/email';
 import { jsonError, jsonSuccess } from '../../lib/response';
 import { applyCors } from '../../utils';
 import { logger } from '../../utils/logger';
@@ -80,12 +80,11 @@ Copy-friendly row:
 ${nameStr} | ${emailStr} | ${phoneStr} | ${submittedAt}`;
 
     const to = 'smithpatvekar@gmail.com';
-    await sendEmail({
-      to,
-      subject,
-      htmlBody,
-      textBody,
-    });
+    // Notification delivery must not make a valid registration fail.
+    sendEmailAsync(
+      () => sendEmail({ to, subject, htmlBody, textBody }),
+      'workshop-signup'
+    );
 
     logger.info(`Workshop signup received: ${emailStr} (${phoneStr})`);
     return jsonSuccess(res, 200, "You're on the list! We'll be in touch soon.");

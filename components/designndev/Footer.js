@@ -3,9 +3,6 @@
 import Link from 'next/link'
 import Image from 'next/image'
 
-const defaultCtaClass =
-  'inline-flex items-center justify-center px-5 py-2.5 text-sm font-semibold text-slate-900 bg-yellow-400 hover:bg-yellow-300 rounded-lg border-2 border-black transition-colors whitespace-nowrap'
-
 const landingCtaClass =
   'inline-flex items-center justify-center w-full sm:w-auto px-10 py-5 text-lg sm:text-xl font-bold text-slate-900 bg-yellow-400 hover:bg-yellow-300 rounded-2xl border-2 border-black shadow-lg transition-all focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:ring-offset-2 focus:ring-offset-slate-900'
 
@@ -34,20 +31,7 @@ export default function Footer({ variant = 'default', onEnrollClick }) {
                   </Link>
                 )}
               </div>
-            ) : (
-              <div className="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto">
-                <Link
-                  href="/workshop"
-                  className="text-sm font-medium text-slate-300 hover:text-white underline-offset-4 hover:underline transition-colors whitespace-nowrap"
-                >
-                  Workshop
-                </Link>
-                <span className="text-sm text-slate-300 whitespace-nowrap">Subscribe to our updates</span>
-                <Link href="/workshop" className={defaultCtaClass}>
-                  Join Now
-                </Link>
-              </div>
-            )}
+            ) : null}
           </div>
           <div className="mt-6 pt-6 border-t border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-3 text-sm text-slate-400">
             <div className="flex flex-wrap items-center justify-center gap-4">

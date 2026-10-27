@@ -137,12 +137,11 @@ export default function Home() {
             transition={{ duration: 0.6, delay: 0.1 }}
             className="mt-4 sm:mt-5 w-full max-w-md sm:max-w-lg mx-auto"
           >
-            <Link
-              href={enrolHref}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="block rounded-xl focus:outline-none focus-visible:ring-2 focus-visible:ring-yellow-400 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0f2d4a]"
-              aria-label="Workshop (opens in new tab)"
+            <button
+              type="button"
+              onClick={openRegister}
+              className="block w-full rounded-xl focus:outline-none focus-visible:ring-2 focus-visible:ring-yellow-400 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0f2d4a]"
+              aria-label="Register for the workshop"
             >
               <Image
                 src="/hero-section-image.jpeg"
@@ -152,7 +151,7 @@ export default function Home() {
                 className="w-full h-auto rounded-xl border-2 border-black shadow-lg object-cover transition-opacity hover:opacity-95"
                 priority
               />
-            </Link>
+            </button>
           </motion.div>
           <motion.p
             initial={{ opacity: 0, y: 16 }}
