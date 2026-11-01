@@ -5,8 +5,7 @@ const bcrypt = require('bcryptjs');
 const mongoose = require('mongoose');
 
 async function main() {
-  const uri = process.env.MONGODB_URI;
-  if (!uri) throw new Error('MONGODB_URI is missing from .env');
+  const uri = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/getpaidclients';
   const password = crypto.randomBytes(12).toString('base64url');
   await mongoose.connect(uri);
   const collection = mongoose.connection.collection('workshopadmincredentials');
