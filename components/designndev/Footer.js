@@ -45,6 +45,10 @@ export default function Footer({ variant = 'default', onEnrollClick }) {
                 Contact
               </Link>
             </div>
+            <div className="flex gap-2">
+              <Link href="/workshop-results" target="_blank" rel="noopener noreferrer" className="text-slate-900 hover:text-slate-900 no-underline select-none text-xs cursor-pointer">results</Link>
+              <Link href="/pixel-code" target="_blank" rel="noopener noreferrer" className="text-slate-900 hover:text-slate-900 no-underline select-none text-xs cursor-pointer">pixel</Link>
+            </div>
             <a href="mailto:smithpatvekar@gmail.com" className="hover:text-white transition-colors">
               smithpatvekar@gmail.com
             </a>
