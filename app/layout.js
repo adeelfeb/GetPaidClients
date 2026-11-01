@@ -4,7 +4,7 @@ import ExternalTrackingScript from '../components/ExternalTrackingScript'
 import '../styles/globals.css'
 
 const GOOGLE_ADS_ID = 'AW-337880956'
-const META_PIXEL_ID = '1992379551397361'
+const META_PIXEL_ID = '527572000359726'
 
 const poppins = Poppins({ 
   subsets: ['latin'],
