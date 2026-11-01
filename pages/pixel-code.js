@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import Head from 'next/head';
+import Footer from '../components/designndev/Footer';
 
 export default function PixelCodePage() {
   const [password, setPassword] = useState('');
@@ -57,6 +58,7 @@ export default function PixelCodePage() {
           </form>
         </>}
       </div>
+      <Footer />
     </main>
   </>;
 }

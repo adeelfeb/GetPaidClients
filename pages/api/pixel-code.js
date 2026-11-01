@@ -30,6 +30,8 @@ export default async function handler(req, res) {
     if (!snippet.trim()) return jsonError(res, 400, 'Snippet required');
     const parsed = parseSnippet(snippet);
     if (!parsed.pixelId) return jsonError(res, 400, 'Could not extract pixel id');
+    const existing = readStored();
+    if (existing && existing.snippet === snippet) return jsonError(res, 409, 'This snippet was already added and is current');
     const stored = { ...parsed, updatedAt: new Date().toISOString() };
     if (!writeStored(stored)) return jsonError(res, 500, 'Could not store');
     return jsonSuccess(res, 200, 'Stored', stored);
