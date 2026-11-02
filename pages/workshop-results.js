@@ -1,14 +1,12 @@
 import { useEffect, useState } from 'react';
 import Head from 'next/head';
-import Footer from '../components/designndev/Footer';
 
 export default function WorkshopResultsPage() {
   const [password, setPassword] = useState('');
   const [entries, setEntries] = useState(null);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  const [fromDate, setFromDate] = useState('');
-  const [toDate, setToDate] = useState('');
+  const [query, setQuery] = useState('');
 
   const loadEntries = async () => {
     const response = await fetch('/api/workshop-results', { credentials: 'include' });
@@ -32,6 +30,21 @@ export default function WorkshopResultsPage() {
     } catch (err) { setError(err.message); } finally { setLoading(false); }
   };
 
+  const filtered = (entries || []).filter((e) => {
+    const q = query.trim().toLowerCase();
+    if (!q) return true;
+    return [e.name, e.email, e.phone].some((v) => String(v || '').toLowerCase().includes(q));
+  });
+
+  const downloadExcel = async () => {
+    const XLSX = await import('xlsx');
+    const rows = filtered.map((e) => ({ Name: e.name, Email: e.email, Phone: e.phone, Submitted: new Date(e.submittedAt).toISOString() }));
+    const ws = XLSX.utils.json_to_sheet(rows);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Registrations');
+    XLSX.writeFile(wb, 'workshop-registrations.xlsx');
+  };
+
   return <>
     <Head><title>Workshop registrations</title></Head>
     <main className="min-h-screen bg-slate-100 px-4 py-12 text-slate-900">
@@ -42,28 +55,26 @@ export default function WorkshopResultsPage() {
           <input type="password" required value={password} onChange={(e) => setPassword(e.target.value)} className="w-full rounded-lg border px-4 py-3" placeholder="Password" />
           <button disabled={loading} className="rounded-lg bg-blue-700 px-5 py-3 font-semibold text-white">{loading ? 'Checking…' : 'View results'}</button>
           {error && <p className="text-sm text-red-600">{error}</p>}
-        </form> : (() => {
-          const filtered = entries.filter((e) => {
-            const d = new Date(e.submittedAt);
-            if (fromDate && d < new Date(fromDate)) return false;
-            if (toDate && d > new Date(toDate + 'T23:59:59')) return false;
-            return true;
-          });
-          const download = () => { const csv = 'Name,Email,Phone,Submitted\n' + filtered.map(e => [e.name,e.email,e.phone,new Date(e.submittedAt).toISOString()].map(v=>`"${String(v).replace(/"/g,'""')}"`).join(',')).join('\n'); const b=new Blob([csv],{type:'text/csv'}); const u=URL.createObjectURL(b); const a=document.createElement('a'); a.href=u; a.download='workshop-registrations.csv'; a.click(); URL.revokeObjectURL(u); };
-          return <div className="mt-8 space-y-4">
-            <div className="flex flex-wrap items-center gap-3">
-              <label className="text-sm">From <input type="date" value={fromDate} onChange={(e)=>setFromDate(e.target.value)} className="rounded border px-2 py-1" /></label>
-              <label className="text-sm">To <input type="date" value={toDate} onChange={(e)=>setToDate(e.target.value)} className="rounded border px-2 py-1" /></label>
-              <button onClick={download} className="rounded-lg bg-green-700 px-5 py-2 font-semibold text-white">Download CSV</button>
-            </div>
-            <div className="max-h-96 overflow-auto rounded border">
-              <table className="w-full min-w-[680px] border-collapse text-left text-sm"><thead><tr className="border-b bg-slate-50"><th className="p-3">Name</th><th className="p-3">Email</th><th className="p-3">Phone</th><th className="p-3">Submitted</th></tr></thead><tbody>{filtered.map((entry) => <tr key={`${entry.email}-${entry.submittedAt}`} className="border-b"><td className="p-3">{entry.name}</td><td className="p-3">{entry.email}</td><td className="p-3">{entry.phone}</td><td className="p-3">{new Date(entry.submittedAt).toLocaleString()}</td></tr>)}</tbody></table>
-            </div>
-            {filtered.length === 0 && <p className="py-6 text-slate-500">No registrations yet.</p>}
-          </div>;
-        })()}
+        </form> : <>
+          <div className="mt-6 flex flex-wrap items-center gap-3">
+            <input value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Filter by name, email or phone" className="rounded-lg border px-4 py-2 text-sm" />
+            <button onClick={downloadExcel} className="rounded-lg bg-emerald-700 px-5 py-2 font-semibold text-white">Download Excel</button>
+            <span className="text-sm text-slate-500">{filtered.length} of {entries.length} records</span>
+          </div>
+          <div className="mt-4 max-h-[520px] overflow-auto rounded-lg border">
+            <table className="w-full min-w-[680px] border-collapse text-left text-sm">
+              <thead><tr className="border-b bg-slate-50">
+                <th className="sticky top-0 z-10 bg-slate-50 p-3">Name</th>
+                <th className="sticky top-0 z-10 bg-slate-50 p-3">Email</th>
+                <th className="sticky top-0 z-10 bg-slate-50 p-3">Phone</th>
+                <th className="sticky top-0 z-10 bg-slate-50 p-3">Submitted</th>
+              </tr></thead>
+              <tbody>{filtered.map((entry) => <tr key={`${entry.email}-${entry.submittedAt}`} className="border-b"><td className="p-3">{entry.name}</td><td className="p-3">{entry.email}</td><td className="p-3">{entry.phone}</td><td className="p-3">{new Date(entry.submittedAt).toLocaleString()}</td></tr>)}</tbody>
+            </table>
+            {filtered.length === 0 && <p className="py-6 text-center text-slate-500">No registrations match.</p>}
+          </div>
+        </>}
       </div>
-      <Footer />
     </main>
   </>;
 }

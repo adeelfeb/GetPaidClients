@@ -1,6 +1,7 @@
 import { Poppins } from 'next/font/google'
 import Script from 'next/script'
 import ExternalTrackingScript from '../components/ExternalTrackingScript'
+import MetaPixel from '../components/MetaPixel'
 import '../styles/globals.css'
 
 const GOOGLE_ADS_ID = 'AW-337880956'
@@ -59,20 +60,7 @@ export default function RootLayout({ children }) {
             gtag('config', '${GOOGLE_ADS_ID}');
           `}
         </Script>
-        <Script id="meta-pixel-base" strategy="afterInteractive">
-          {`
-            !function(f,b,e,v,n,t,s)
-            {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-            n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-            if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-            n.queue=[];t=b.createElement(e);t.async=!0;
-            t.src=v;s=b.getElementsByTagName(e)[0];
-            s.parentNode.insertBefore(t,s)}(window, document,'script',
-            'https://connect.facebook.net/en_US/fbevents.js');
-            fbq('init', '${META_PIXEL_ID}');
-            fbq('track', 'PageView');
-          `}
-        </Script>
+        <MetaPixel />
         <ExternalTrackingScript />
         {children}
       </body>

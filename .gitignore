@@ -69,3 +69,5 @@ proof-backups/
 
 # Large workshop recording (use NEXT_PUBLIC_WORKSHOP_VIDEO_URL instead)
 public/Software 8 april Webinar-esv2-50p-bg-10p-music-10p.mp4
+# Secure pixel snippet store
+data/pixel-snippets.json
