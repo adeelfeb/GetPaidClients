@@ -7,6 +7,11 @@ export default function WorkshopResultsPage() {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [query, setQuery] = useState('');
+  const [recipients, setRecipients] = useState([]);
+  const [logs, setLogs] = useState([]);
+  const [newEmail, setNewEmail] = useState('');
+  const [compose, setCompose] = useState({ to: '', subject: '', body: '' });
+  const [msg, setMsg] = useState('');
 
   const loadEntries = async () => {
     const response = await fetch('/api/workshop-results', { credentials: 'include' });
@@ -15,7 +20,15 @@ export default function WorkshopResultsPage() {
     setEntries(data.data || []);
   };
 
-  useEffect(() => { loadEntries().catch(() => setEntries(null)); }, []);
+  const loadAdmin = async () => {
+    try {
+      const r = await fetch('/api/notification-recipients', { credentials: 'include' });
+      if (r.ok) { const d = await r.json(); setRecipients(d.data || []); }
+      const l = await fetch('/api/email-delivery-logs', { credentials: 'include' });
+      if (l.ok) { const d = await l.json(); setLogs(d.data || []); }
+    } catch {}
+  };
+  useEffect(() => { loadEntries().catch(() => setEntries(null)); loadAdmin(); }, []);
 
   const login = async (event) => {
     event.preventDefault(); setLoading(true); setError('');
@@ -28,6 +41,25 @@ export default function WorkshopResultsPage() {
       if (!response.ok) throw new Error(data.message || 'Unable to authenticate');
       setPassword(''); await loadEntries();
     } catch (err) { setError(err.message); } finally { setLoading(false); }
+  };
+
+  const addRecipient = async (e) => {
+    e.preventDefault(); setMsg('');
+    const res = await fetch('/api/notification-recipients', { method: 'POST', credentials: 'include', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email: newEmail }) });
+    const data = await res.json();
+    if (!res.ok) { setMsg(data.message || 'Failed'); return; }
+    setNewEmail(''); loadAdmin();
+  };
+  const removeRecipient = async (id) => {
+    await fetch('/api/notification-recipients', { method: 'DELETE', credentials: 'include', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id }) });
+    loadAdmin();
+  };
+  const sendMail = async (e) => {
+    e.preventDefault(); setMsg('');
+    const res = await fetch('/api/send-email', { method: 'POST', credentials: 'include', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(compose) });
+    const data = await res.json();
+    if (!res.ok) { setMsg(data.message || 'Failed'); return; }
+    setMsg('Sent'); setCompose({ to: '', subject: '', body: '' }); loadAdmin();
   };
 
   const filtered = (entries || []).filter((e) => {
@@ -73,6 +105,30 @@ export default function WorkshopResultsPage() {
             </table>
             {filtered.length === 0 && <p className="py-6 text-center text-slate-500">No registrations match.</p>}
           </div>
+
+          <h2 className="mt-8 text-xl font-bold">Notification recipients</h2>
+          <form onSubmit={addRecipient} className="mt-3 flex gap-2">
+            <input value={newEmail} onChange={(e)=>setNewEmail(e.target.value)} placeholder="email@example.com" className="rounded-lg border px-4 py-2 text-sm" />
+            <button className="rounded-lg bg-blue-700 px-4 py-2 text-sm font-semibold text-white">Add</button>
+          </form>
+          <ul className="mt-2 space-y-1 text-sm">{recipients.map((r)=><li key={r._id} className="flex items-center gap-2">{r.email} <button onClick={()=>removeRecipient(r._id)} className="text-red-600">remove</button></li>)}</ul>
+
+          <h2 className="mt-8 text-xl font-bold">Compose email</h2>
+          <form onSubmit={sendMail} className="mt-3 space-y-2 max-w-2xl">
+            <input value={compose.to} onChange={(e)=>setCompose({...compose,to:e.target.value})} placeholder="To" className="w-full rounded-lg border px-4 py-2 text-sm" />
+            <input value={compose.subject} onChange={(e)=>setCompose({...compose,subject:e.target.value})} placeholder="Subject" className="w-full rounded-lg border px-4 py-2 text-sm" />
+            <textarea value={compose.body} onChange={(e)=>setCompose({...compose,body:e.target.value})} placeholder="Body" rows={4} className="w-full rounded-lg border px-4 py-2 text-sm" />
+            <button className="rounded-lg bg-emerald-700 px-5 py-2 font-semibold text-white">Send</button>
+          </form>
+
+          <h2 className="mt-8 text-xl font-bold">Delivery log</h2>
+          <div className="mt-3 max-h-[320px] overflow-auto rounded-lg border">
+            <table className="w-full border-collapse text-left text-sm">
+              <thead><tr className="border-b bg-slate-50"><th className="p-2">Recipient</th><th className="p-2">Subject</th><th className="p-2">Time</th><th className="p-2">Status</th></tr></thead>
+              <tbody>{logs.map((l)=><tr key={l._id} className="border-b"><td className="p-2">{l.to}</td><td className="p-2">{l.subject}</td><td className="p-2">{new Date(l.createdAt).toLocaleString()}</td><td className="p-2">{l.success?'OK':'FAIL'}</td></tr>)}</tbody>
+            </table>
+          </div>
+          {msg && <p className="mt-2 text-sm text-blue-700">{msg}</p>}
         </>}
       </div>
     </main>
