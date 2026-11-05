@@ -1,8 +1,9 @@
-import { sendEmail, sendEmailAsync } from '../../utils/email';
+import { sendEmail } from '../../lib/email/smtpMaster';
 import { jsonError, jsonSuccess } from '../../lib/response';
 import { applyCors } from '../../utils';
 import { logger } from '../../utils/logger';
 import connectDB from '../../lib/db';
+import { env } from '../../lib/config';
 import WorkshopRegistration from '../../models/WorkshopRegistration';
 
 /**
@@ -94,12 +95,28 @@ ${nameStr} | ${emailStr} | ${phoneStr} | ${submittedAt}`;
       submittedAt,
     });
 
-    const to = 'smithpatvekar@gmail.com';
-    // Notification delivery must not make a valid registration fail.
-    sendEmailAsync(
-      () => sendEmail({ to, subject, htmlBody, textBody }),
-      'workshop-signup'
-    );
+    const to = env.WORKSHOP_NOTIFICATION_EMAIL;
+    const esc = (v) => String(v).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    const safeHtmlBody = `
+      <!DOCTYPE html>
+      <html>
+      <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Workshop Signup</title></head>
+      <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
+        <div style="background-color: #f4f4f4; padding: 20px; border-radius: 5px;">
+          <h2 style="color: #333; margin-top: 0;">New Workshop Intake Submission — GetPaidClients</h2>
+          <p><strong>Name:</strong> ${esc(nameStr)}</p>
+          <p><strong>Email:</strong> ${esc(emailStr)}</p>
+          <p><strong>Phone:</strong> ${esc(phoneStr)}</p>
+          <p><strong>Submitted At:</strong> ${esc(submittedAt)}</p>
+        </div>
+      </body>
+      </html>
+    `;
+    if (to) {
+      sendEmail({ to, subject: 'New Workshop Intake Submission — GetPaidClients', text: textBody, html: safeHtmlBody })
+        .then((r) => { if (!r.success) logger.warn('Workshop notification failed', { error: r.error }); })
+        .catch((e) => logger.warn('Workshop notification failed', { error: e?.message }));
+    }
 
     logger.info(`Workshop signup received: ${emailStr} (${phoneStr})`);
     return jsonSuccess(res, 200, "You're on the list! We'll be in touch soon.");
