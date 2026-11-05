@@ -5,6 +5,7 @@ import { logger } from '../../utils/logger';
 import connectDB from '../../lib/db';
 import { env } from '../../lib/config';
 import WorkshopRegistration from '../../models/WorkshopRegistration';
+import NotificationRecipient from '../../models/NotificationRecipient';
 
 /**
  * Workshop signup endpoint.
@@ -95,7 +96,8 @@ ${nameStr} | ${emailStr} | ${phoneStr} | ${submittedAt}`;
       submittedAt,
     });
 
-    const to = env.WORKSHOP_NOTIFICATION_EMAIL;
+    const recipientsDocs = await NotificationRecipient.find({ purpose: 'workshop' }).lean();
+    const toList = recipientsDocs.length ? recipientsDocs.map((r) => r.email) : (env.WORKSHOP_NOTIFICATION_EMAIL ? env.WORKSHOP_NOTIFICATION_EMAIL.split(',').map((s) => s.trim()).filter(Boolean) : []);
     const esc = (v) => String(v).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
     const safeHtmlBody = `
       <!DOCTYPE html>
@@ -112,7 +114,7 @@ ${nameStr} | ${emailStr} | ${phoneStr} | ${submittedAt}`;
       </body>
       </html>
     `;
-    if (to) {
+    for (const to of toList) {
       sendEmail({ to, subject: 'New Workshop Intake Submission — GetPaidClients', text: textBody, html: safeHtmlBody })
         .then((r) => { if (!r.success) logger.warn('Workshop notification failed', { error: r.error }); })
         .catch((e) => logger.warn('Workshop notification failed', { error: e?.message }));
