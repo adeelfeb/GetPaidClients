@@ -9,6 +9,7 @@ export default function WorkshopResultsPage() {
   const [query, setQuery] = useState('');
   const [recipients, setRecipients] = useState([]);
   const [logs, setLogs] = useState([]);
+  const [logQuery, setLogQuery] = useState('');
   const [newEmail, setNewEmail] = useState('');
   const [adding, setAdding] = useState(false);
   const [sending, setSending] = useState(false);
@@ -128,10 +129,11 @@ export default function WorkshopResultsPage() {
           </form>
 
           <h2 className="mt-8 text-xl font-bold">Delivery log</h2>
+          <input value={logQuery} onChange={(e)=>setLogQuery(e.target.value)} placeholder="Filter recipient/subject" className="mt-2 rounded-lg border px-4 py-2 text-sm" />
           <div className="mt-3 max-h-[320px] overflow-auto rounded-lg border">
-            <table className="w-full border-collapse text-left text-sm">
+            <table className="w-full min-w-[640px] border-collapse text-left text-sm">
               <thead><tr className="border-b bg-slate-50"><th className="p-2">Recipient</th><th className="p-2">Subject</th><th className="p-2">Time</th><th className="p-2">Status</th></tr></thead>
-              <tbody>{logs.map((l)=><tr key={l._id} className="border-b"><td className="p-2">{l.to}</td><td className="p-2">{l.subject}</td><td className="p-2">{new Date(l.createdAt).toLocaleString()}</td><td className="p-2">{l.success?'OK':'FAIL'}</td></tr>)}</tbody>
+              <tbody>{logs.filter((l)=>{const q=logQuery.trim().toLowerCase(); if(!q) return true; return [l.to,l.subject].some(v=>String(v||'').toLowerCase().includes(q));}).map((l)=><tr key={l._id} className="border-b"><td className="p-2">{l.to}</td><td className="p-2">{l.subject}</td><td className="p-2">{new Date(l.createdAt).toLocaleString()}</td><td className="p-2">{l.success?'OK':'FAIL'}</td></tr>)}</tbody>
             </table>
           </div>
           {msg && <p className="mt-2 text-sm text-blue-700">{msg}</p>}
