@@ -10,6 +10,8 @@ export default function WorkshopResultsPage() {
   const [recipients, setRecipients] = useState([]);
   const [logs, setLogs] = useState([]);
   const [newEmail, setNewEmail] = useState('');
+  const [adding, setAdding] = useState(false);
+  const [sending, setSending] = useState(false);
   const [compose, setCompose] = useState({ to: '', subject: '', body: '' });
   const [msg, setMsg] = useState('');
 
@@ -44,22 +46,26 @@ export default function WorkshopResultsPage() {
   };
 
   const addRecipient = async (e) => {
-    e.preventDefault(); setMsg('');
-    const res = await fetch('/api/notification-recipients', { method: 'POST', credentials: 'include', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email: newEmail }) });
-    const data = await res.json();
-    if (!res.ok) { setMsg(data.message || 'Failed'); return; }
-    setNewEmail(''); loadAdmin();
+    e.preventDefault(); setMsg(''); setAdding(true);
+    try {
+      const res = await fetch('/api/notification-recipients', { method: 'POST', credentials: 'include', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email: newEmail }) });
+      const data = await res.json();
+      if (!res.ok) { setMsg(data.message || 'Failed'); return; }
+      setNewEmail(''); loadAdmin();
+    } finally { setAdding(false); }
   };
   const removeRecipient = async (id) => {
     await fetch('/api/notification-recipients', { method: 'DELETE', credentials: 'include', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id }) });
     loadAdmin();
   };
   const sendMail = async (e) => {
-    e.preventDefault(); setMsg('');
-    const res = await fetch('/api/send-email', { method: 'POST', credentials: 'include', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(compose) });
-    const data = await res.json();
-    if (!res.ok) { setMsg(data.message || 'Failed'); return; }
-    setMsg('Sent'); setCompose({ to: '', subject: '', body: '' }); loadAdmin();
+    e.preventDefault(); setMsg(''); setSending(true);
+    try {
+      const res = await fetch('/api/send-email', { method: 'POST', credentials: 'include', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(compose) });
+      const data = await res.json();
+      if (!res.ok) { setMsg(data.message || 'Failed'); return; }
+      setMsg('Sent'); setCompose({ to: '', subject: '', body: '' }); loadAdmin();
+    } finally { setSending(false); }
   };
 
   const filtered = (entries || []).filter((e) => {
@@ -109,7 +115,7 @@ export default function WorkshopResultsPage() {
           <h2 className="mt-8 text-xl font-bold">Notification recipients</h2>
           <form onSubmit={addRecipient} className="mt-3 flex gap-2">
             <input value={newEmail} onChange={(e)=>setNewEmail(e.target.value)} placeholder="email@example.com" className="rounded-lg border px-4 py-2 text-sm" />
-            <button className="rounded-lg bg-blue-700 px-4 py-2 text-sm font-semibold text-white">Add</button>
+            <button disabled={adding} className="rounded-lg bg-blue-700 px-4 py-2 text-sm font-semibold text-white">{adding?'Adding…':'Add'}</button>
           </form>
           <ul className="mt-2 space-y-1 text-sm">{recipients.map((r)=><li key={r._id} className="flex items-center gap-2">{r.email} <button onClick={()=>removeRecipient(r._id)} className="text-red-600">remove</button></li>)}</ul>
 
@@ -118,7 +124,7 @@ export default function WorkshopResultsPage() {
             <input value={compose.to} onChange={(e)=>setCompose({...compose,to:e.target.value})} placeholder="To" className="w-full rounded-lg border px-4 py-2 text-sm" />
             <input value={compose.subject} onChange={(e)=>setCompose({...compose,subject:e.target.value})} placeholder="Subject" className="w-full rounded-lg border px-4 py-2 text-sm" />
             <textarea value={compose.body} onChange={(e)=>setCompose({...compose,body:e.target.value})} placeholder="Body" rows={4} className="w-full rounded-lg border px-4 py-2 text-sm" />
-            <button className="rounded-lg bg-emerald-700 px-5 py-2 font-semibold text-white">Send</button>
+            <button disabled={sending} className="rounded-lg bg-emerald-700 px-5 py-2 font-semibold text-white">{sending?'Sending…':'Send'}</button>
           </form>
 
           <h2 className="mt-8 text-xl font-bold">Delivery log</h2>

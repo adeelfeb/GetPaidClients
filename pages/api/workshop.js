@@ -1,4 +1,5 @@
 import { sendEmail } from '../../lib/email/smtpMaster';
+import EmailDeliveryLog from '../../models/EmailDeliveryLog';
 import { jsonError, jsonSuccess } from '../../lib/response';
 import { applyCors } from '../../utils';
 import { logger } from '../../utils/logger';
@@ -116,8 +117,11 @@ ${nameStr} | ${emailStr} | ${phoneStr} | ${submittedAt}`;
     `;
     for (const to of toList) {
       sendEmail({ to, subject: 'New Workshop Intake Submission — GetPaidClients', text: textBody, html: safeHtmlBody })
-        .then((r) => { if (!r.success) logger.warn('Workshop notification failed', { error: r.error }); })
-        .catch((e) => logger.warn('Workshop notification failed', { error: e?.message }));
+        .then((r) => {
+          EmailDeliveryLog.create({ to, subject: 'New Workshop Intake Submission — GetPaidClients', success: !!r.success, error: r.error || '', messageId: r.messageId || null }).catch(()=>{});
+          if (!r.success) logger.warn('Workshop notification failed', { error: r.error });
+        })
+        .catch((e) => { EmailDeliveryLog.create({ to, subject: 'New Workshop Intake Submission — GetPaidClients', success: false, error: e?.message || 'Failed' }).catch(()=>{}); logger.warn('Workshop notification failed', { error: e?.message }); });
     }
 
     logger.info(`Workshop signup received: ${emailStr} (${phoneStr})`);
