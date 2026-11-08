@@ -9,9 +9,13 @@ import { NextResponse } from 'next/server';
  * You can add route protection or other middleware logic here if needed.
  */
 export function middleware(request) {
-  // No-op middleware - just ensures manifest files are generated
-  // Add your middleware logic here if needed (e.g., auth checks, redirects)
-  return NextResponse.next();
+  const response = NextResponse.next();
+  // Prevent proxies (nginx) from caching HTML that references deleted build chunks.
+  // Stale cached HTML + new build = /_next/static/... 404s for some users after deploy.
+  if (!request.nextUrl.pathname.startsWith('/_next/static')) {
+    response.headers.set('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0');
+  }
+  return response;
 }
 
 // Optional: Configure which routes the middleware runs on

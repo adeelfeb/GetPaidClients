@@ -132,6 +132,22 @@ const nextConfig = {
   // Production optimizations
   poweredByHeader: false, // Remove X-Powered-By header
   compress: true, // Enable gzip compression
+
+  // Prevent proxies/browsers from caching HTML that references deleted build chunks.
+  // Stale HTML + new build = /_next/static/... 404s for some users after a deploy.
+  // Static chunks under /_next/static are content-hashed, so they stay immutable.
+  async headers() {
+    return [
+      {
+        source: '/_next/static/:path*',
+        headers: [{ key: 'Cache-Control', value: 'public, max-age=31536000, immutable' }],
+      },
+      {
+        source: '/:path*',
+        headers: [{ key: 'Cache-Control', value: 'no-store, no-cache, must-revalidate, max-age=0' }],
+      },
+    ];
+  },
 }
 
 module.exports = nextConfig

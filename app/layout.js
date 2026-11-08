@@ -1,4 +1,8 @@
 import { Poppins } from 'next/font/google'
+
+// Force server-side rendering so HTML is never cached long-term by proxies (nginx).
+// Stale cached HTML referencing deleted build chunks caused intermittent nginx 404s.
+export const dynamic = 'force-dynamic'
 import Script from 'next/script'
 import ExternalTrackingScript from '../components/ExternalTrackingScript'
 import MetaPixel from '../components/MetaPixel'
